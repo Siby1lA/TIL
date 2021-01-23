@@ -1,3 +1,3 @@
 #Kokoa Clone
 
-Kokoa Clone Project
+NomadCoders Kokoa Clone Project
