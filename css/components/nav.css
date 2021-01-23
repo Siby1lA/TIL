@@ -5,9 +5,40 @@
     background-color: #f9f9fa;;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 .nav__list{
     display: flex;
     justify-content: space-between;
-    
     padding: 15px 50px;
+}
+
+.nav__link{
+    position: relative;
+}
+
+.nav__number{
+    background-color: tomato;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: white;
+    font-weight: 600;
+}
+
+.nav__search{
+    position: absolute;
+    background-color: tomato;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    left: 20px;
+    bottom: 15px;
+
 }
