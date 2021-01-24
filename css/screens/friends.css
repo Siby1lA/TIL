@@ -1,0 +1,16 @@
+#friends_info{
+    display: block;
+    background-color: #fafafa;
+    padding: 15px 0px;
+    text-align: center;
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+
+#friends_info i{
+    color: rgba(0,0,0,0.3);
+}
+
+.friend-screen{
+    padding: 0px var(--horizontal-space);
+}
