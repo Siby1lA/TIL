@@ -20,12 +20,12 @@
 .nav__number{
     background-color: tomato;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     display: flex;
     position: absolute;
-    left: 10px;
-    bottom: 8px;
+    left: 13px;
+    bottom: 15px;
     justify-content: center;
     align-items: center;
     font-size: 12px;
@@ -36,10 +36,10 @@
 .nav__search{
     position: absolute;
     background-color: tomato;
-    width: 5px;
-    height: 5px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    left: 20px;
-    bottom: 15px;
+    left: 30px;
+    bottom: 20px;
 
 }
