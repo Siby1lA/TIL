@@ -18,19 +18,9 @@
 }
 
 .nav__number{
-    background-color: tomato;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
     position: absolute;
     left: 13px;
     bottom: 15px;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    color: white;
-    font-weight: 600;
 }
 
 .nav__search{

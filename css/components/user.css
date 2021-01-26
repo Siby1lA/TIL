@@ -40,6 +40,15 @@
     font-weight: 400;
 }
 
+
+.user-component__time{
+    display: block;
+    margin-bottom: 10px;
+}
+
 .user-component__column:last-child{
     color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
