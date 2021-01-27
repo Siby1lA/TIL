@@ -10,3 +10,14 @@
     color: white;
     font-weight: 600;
 }
+
+.header-badge{
+    position: relative;
+    display: block;
+    left: 70px;
+    bottom: 25px;
+    background-color: tomato;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
