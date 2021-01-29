@@ -11,13 +11,15 @@
     font-weight: 600;
 }
 
-.header-badge{
+.screen-header__icons{
     position: relative;
-    display: block;
-    left: 70px;
-    bottom: 25px;
+}
+
+.screen-header__badge{
+    position: absolute;
     background-color: tomato;
-    width: 6px;
-    height: 6px;
     border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    bottom: 15px;
 }
