@@ -59,16 +59,21 @@
 .message-row{
     width: 100%;
     display: flex;
+    margin-bottom: 50px;
 }
 
 .message_author{
+    font-size: 18px;
     margin-bottom: 8px;
     display: block;
 }
 
+.message__time{
+    font-size: 13px;
+}
 .message__bubble{
     background-color: white;
-    padding: 8px 13px;
+    padding: 12px 13px;
     border-radius: 15px;
     border-top-left-radius: 0px;
     margin-right: 8px;
@@ -77,10 +82,29 @@
 .message__info{
     display: flex;
     align-items: flex-end;
-    
 }
+
+
 .message_author,
 .message__time{
-    opacity: 0.8;
-    font-size: 13px;
+    opacity: 0.9;
+    font-size: 14px;
 }
+
+.message-row--own{
+    justify-content: flex-end;
+}
+
+.message-row--own .message__bubble{
+    background-color: var(--yellow);
+    border-top-right-radius: 0px;
+    border-top-left-radius: 15px;
+    margin-right: 0px;
+    margin-left: 8px;
+}
+
+.message-row--own .message__info{
+    flex-direction: row-reverse;
+}
+
+
