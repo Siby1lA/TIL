@@ -39,7 +39,6 @@
     align-items: center;
 }
 
-
 .chat__timestamp{
     background-color: #92a4b2;
     color:whitesmoke;
@@ -106,4 +105,66 @@
     flex-direction: row-reverse;
 }
 
+.reply{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 25px;
+    padding-left: 15px;
+    align-items: center;
+    box-sizing: border-box;
+}
 
+.reply .reply__column:first-child{
+    width: 7%;
+    
+}
+
+.reply .reply__column:last-child{
+    width: 93%;
+    position: relative;
+}
+
+.reply input{
+    padding: 10px;
+    padding-right: 0px;
+    width: 100%;
+    border: var(--main-border);
+    border-radius: 20px;
+}
+
+.reply__column:last-child > i,
+.reply__column:last-child button{
+    position: absolute;
+    right: -3px;
+    top: 2px;
+}
+
+.reply__column:last-child > i{
+    right: 40px;
+    top: 10px;
+}
+
+.reply__column:last-child button{
+    background-color: var(--yellow);
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.reply__column:last-child button:focus,
+.reply__column:last-child button:active{
+    outline: none;
+}
+
+.reply i{
+    opacity: 0.6;
+}
+
+.reply__column button i{
+    opacity: 1;
+}
