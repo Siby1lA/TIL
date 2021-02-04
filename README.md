@@ -1,3 +1,3 @@
 #Kokoa Clone
 
-NomadCoders Kokoa Clone Project
+노마드 코더 카카오 클론코딩
