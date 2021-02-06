@@ -203,3 +203,15 @@
 .reply:focus-within{
     transform: translateY(80px);
 }
+
+@keyframes rotation{
+    from{
+        transform: none;
+    }
+    to{
+        transform: rotateX(300deg);
+    }
+}
+.chat__timestamp:hover{
+    animation: rotation 1s ease-in-out;
+}
