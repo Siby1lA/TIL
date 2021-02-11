@@ -5,9 +5,9 @@ const SubinInfo = {
     name:"Subin",
     age:33,
     gender:"Male",
-    isHandsome:true
+    isHandsome:true,
+    favMovies: ["Along the gods", "LOTR", "Oldboy"],
+    favFood: [{name:"kimchi"}, {name:"choco"}]
 }
 
-SubinInfo.gender = "Female";
-
-alert(SubinInfo.gender);
+console.log(SubinInfo);
