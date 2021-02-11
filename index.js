@@ -1,7 +1,13 @@
-/* Camel case
-변수명을 소문자로 시작해서
-스페이스가 필요하면 대문자로 대체
+/*
+Object
 */
 const SubinInfo = {
-    a
+    name:"Subin",
+    age:33,
+    gender:"Male",
+    isHandsome:true
 }
+
+SubinInfo.gender = "Female";
+
+alert(SubinInfo.gender);
