@@ -1,13 +1,16 @@
 /*
-Object
-*/
-const SubinInfo = {
-    name:"Subin",
-    age:33,
-    gender:"Male",
-    isHandsome:true,
-    favMovies: ["Along the gods", "LOTR", "Oldboy"],
-    favFood: [{name:"kimchi"}, {name:"choco"}]
+function sayHello(name, age){
+    return(`Hello ${name} you are ${age} years old`);
 }
 
-console.log(SubinInfo);
+const greetSubin = sayHello("Suin", 15);
+
+console.log(greetSubin);
+*/
+const calculator ={
+    plus: function(a, b){
+        return a+b;
+    }
+}
+const plus = calculator.plus(5, 5);
+console.log(plus);
