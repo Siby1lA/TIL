@@ -1,2 +1,2 @@
 # Vanilla Javascript todo-list
- 
+
