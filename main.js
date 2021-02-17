@@ -1,4 +1,4 @@
-// Array
+/* Array
 
 const animals =["lion", "bear", "monkey"];
 
@@ -33,3 +33,33 @@ console.log(animals.indexOf("bear"));
 const bearIndex = animals.indexOf("bear");
 animals.splice(bearIndex, 1);
 console.log(animals);
+
+*/
+
+//Object
+
+const monkey = {
+    name: "ringo",
+    face: "funy",
+    age: 11,
+    food: ["banana", "apple", "strawberry"],
+    tail : true,
+    location: {
+        country: "congo",
+        place: "forest",
+        isAfrica: true,
+    }
+}
+
+console.log(monkey);
+console.log(monkey.food);
+console.log(monkey.food[0]);
+console.log(monkey.location.place);
+
+monkey.name = "star";
+
+console.log(monkey.name);
+
+monkey.weight = 50;
+
+console.log(monkey);
