@@ -182,7 +182,8 @@ const totalWeight = animals.reduce(function(acc, cur){
 console.log(totalWeight);
 */
 
-if문
+
+/* if문
 const x = 10;
 if(x == "10"){ //자료형이 달라도 트루
     console.log(`x is 10`);
@@ -213,4 +214,20 @@ switch(animal){
     default:
         console.log('animal is unknown');
         break;
+} */
+
+함수
+function add(a, b){ //nan일 경우 초기값을 지정가능 a=1, b=1
+    return a+b;
 }
+
+const sum = add(10, 20);
+
+console.log(sum);
+
+// arrowFunction
+const add2 = (a, b) =>{ //파라메터가 하나일 경우 괄호 생략 가능 a => a+5;
+    return a+b;
+}  //중괄호 생략 가능
+
+console.log(add2(10,20));
