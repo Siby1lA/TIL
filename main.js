@@ -233,7 +233,7 @@ const add2 = (a, b) =>{ //파라메터가 하나일 경우 괄호 생략 가능 
 console.log(add2(10,20));
 */
 
-//OOP 객체지향 프로그래밍 es5 였던
+/*OOP 객체지향 프로그래밍
 function Song(title, writer, singer, released){
     this.title = title;
     this.writer = writer;
@@ -255,4 +255,25 @@ const song2 = new Song('hater', 'joe', 'joe', '2015-11-22');
 console.log(song1, song2);
 console.log(song1.getReleasedDay());
 console.log(song2.getSongInfo());
+*/
 
+
+// class 위의 기능과는 같지만 보기가 더 편하다 (Syntactic Sugar)
+class Song{
+    constructor(title, writer, singer, released){
+        this.title = title;
+        this.writer = writer;
+        this.singer = singer;
+        this.released = new Date(released);
+    }
+    getReleasedDay(){
+        return this.released.getDay();
+    }
+    getSongInfo(){
+        return `제목: ${this.title}, 작곡: ${this.writer}, 가수: ${this.singer}`
+    }
+}
+const song1 = new Song('love your self', 'eminem', 'eminem', '1998-07-11');
+const song2 = new Song('hater', 'joe', 'joe', '2015-11-22');
+
+console.log(song1.getSongInfo(), song2.getSongInfo());
