@@ -126,7 +126,7 @@ animals.forEach(function(animal, index){ //2번째는 반복문의 인덱스
 });
 */
 
-// 반복문 map 어떤 배열을 다른 형태의 배열로 재생성
+/* 반복문 map 어떤 배열을 다른 형태의 배열로 재생성
 const animals = [
     { name: 'lion', size: 'big', isAggressive: true, weigh: 200},
     { name: 'monkey', size: 'midium', isAggressive: true, weigh: 30},
@@ -139,3 +139,44 @@ const animalsNames = animals.map(function(animal){
 });
 
 console.log(animalsNames);
+*/
+
+/* filter 배열안에서 특정 조건을 가진 아이템들만 뽑아냄
+
+const animals = [
+    { name: 'lion', size: 'big', isAggressive: true, weigh: 200},
+    { name: 'monkey', size: 'midium', isAggressive: true, weigh: 30},
+    { name: 'cat', size: 'small', isAggressive: false, weigh: 10},
+    { name: 'rat', size: 'small', isAggressive: false, weigh: 2},
+];
+
+const smallAnimals = animals.filter(function(item){
+    return  item.size === 'small';
+});
+
+console.log(smallAnimals);
+*/
+
+/* reduce 배열 안에 값들의 합을 구함
+
+const numbers = [1,10,11,23,444];
+const total = numbers.reduce(function(acc, cur){
+    console.log(acc, cur);
+    return acc+cur;
+});
+
+console.log(total);
+*/
+
+const animals = [
+    { name: 'lion', size: 'big', isAggressive: true, weigh: 200},
+    { name: 'monkey', size: 'midium', isAggressive: true, weigh: 30},
+    { name: 'cat', size: 'small', isAggressive: false, weigh: 10},
+    { name: 'rat', size: 'small', isAggressive: false, weigh: 2},
+];
+
+const totalWeight = animals.reduce(function(acc, cur){
+    return acc+cur.weigh;
+}, 0);
+
+console.log(totalWeight);
