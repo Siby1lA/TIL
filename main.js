@@ -216,7 +216,7 @@ switch(animal){
         break;
 } */
 
-함수
+/* 함수
 function add(a, b){ //nan일 경우 초기값을 지정가능 a=1, b=1
     return a+b;
 }
@@ -231,3 +231,28 @@ const add2 = (a, b) =>{ //파라메터가 하나일 경우 괄호 생략 가능 
 }  //중괄호 생략 가능
 
 console.log(add2(10,20));
+*/
+
+//OOP 객체지향 프로그래밍 es5 였던
+function Song(title, writer, singer, released){
+    this.title = title;
+    this.writer = writer;
+    this.singer = singer;
+    this.released = new Date(released);
+    this.getSongInfo = function(){
+        return `제목: ${this.title}, 작곡: ${this.writer}, 가수: ${this.singer}`
+    }
+}
+
+//프로토타입
+Song.prototype.getReleasedDay = function(){
+    return this.released.getDay();
+}
+
+//인스턴스
+const song1 = new Song('love your self', 'eminem', 'eminem', '1998-07-11');
+const song2 = new Song('hater', 'joe', 'joe', '2015-11-22');
+console.log(song1, song2);
+console.log(song1.getReleasedDay());
+console.log(song2.getSongInfo());
+
