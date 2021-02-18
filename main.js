@@ -166,7 +166,7 @@ const total = numbers.reduce(function(acc, cur){
 });
 
 console.log(total);
-*/
+
 
 const animals = [
     { name: 'lion', size: 'big', isAggressive: true, weigh: 200},
@@ -180,3 +180,37 @@ const totalWeight = animals.reduce(function(acc, cur){
 }, 0);
 
 console.log(totalWeight);
+*/
+
+if문
+const x = 10;
+if(x == "10"){ //자료형이 달라도 트루
+    console.log(`x is 10`);
+}
+
+if(x === "10"){ //===가 3개면 자료형까지 같아야 조건이 성립함
+    console.log(`x is 10`);
+}else{
+    console.log(`x is not 10`);
+}
+
+// 3항 연산자
+const animal = "lion";
+const food = animal === 'lioon' ? "meat" : "apple"; 
+console.log(food);
+
+
+//switch case
+const animal = 'lion';
+
+switch(animal){
+    case 'lion':
+        console.log('anlimal is lion');
+        break;
+    case 'monkey':
+        console.log(`animal is monkey`);
+        break;
+    default:
+        console.log('animal is unknown');
+        break;
+}
