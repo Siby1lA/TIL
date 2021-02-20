@@ -258,7 +258,7 @@ console.log(song2.getSongInfo());
 */
 
 
-// class 위의 기능과는 같지만 보기가 더 편하다 (Syntactic Sugar)
+/* class 위의 기능과는 같지만 보기가 더 편하다 (Syntactic Sugar)
 class Song{
     constructor(title, writer, singer, released){
         this.title = title;
@@ -277,3 +277,4 @@ const song1 = new Song('love your self', 'eminem', 'eminem', '1998-07-11');
 const song2 = new Song('hater', 'joe', 'joe', '2015-11-22');
 
 console.log(song1.getSongInfo(), song2.getSongInfo());
+*/
