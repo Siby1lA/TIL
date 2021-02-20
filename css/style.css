@@ -16,7 +16,7 @@ header{
     align-items: center;
 }
 
-.todo-form{
+#todo-form{
     width: 300px;
     height: 30px;
     margin-top: 8rem;
@@ -52,4 +52,10 @@ button{
 
 .item{
     padding: 1rem;
+}
+
+.msg{
+    font-size: 12px;
+    color: tomato;
+    display: none;
 }
