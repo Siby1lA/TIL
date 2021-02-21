@@ -1,2 +1,2 @@
 # todo-list-stdy
- Stdy
+ Study
