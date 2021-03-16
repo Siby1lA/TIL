@@ -1,3 +1,4 @@
+const Btn = document.querySelector(".btn1");
 var player;
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('trailer-movies__movie', {
@@ -9,3 +10,9 @@ function onYouTubeIframeAPIReady() {
 function change() {
     player.loadVideoById('1Nv-vPBA0fI');
 }
+
+function init(){
+    Btn.addEventListener('click', change);
+}
+
+init();
