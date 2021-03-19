@@ -9,13 +9,24 @@
 </head>
 <body>
     <div class="app">
-        {{name}}
+        {{netxYear('하이')}}
     </div>
     <script>
         new Vue({
             el: '.app',
             data: {
-                name: 'Siby1lA'
+                person: {
+                    name: 'Siby1lA',
+                    age: 34
+                }
+            },
+            methods: {
+                netxYear: function(greeting){
+                    return greeting + '! ' + this.person.name + ' 는 내년에 ' + (this.person.age + 1) + '살입니다.';
+                },
+                netxYears(greeting){
+                    return greeting + '! ' + this.person.name + ' 는 내년에 ' + (this.person.age + 1) + '살입니다.';
+                }
             }
         })
     </script>
