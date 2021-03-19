@@ -10,6 +10,8 @@
 <body>
     <div class="app">
         {{netxYear('하이')}}
+        <input v-bind:type="type" :value="inputData">
+        <a :href="getLink('buzzbean11')">채널 링크</a>
     </div>
     <script>
         new Vue({
@@ -18,9 +20,15 @@
                 person: {
                     name: 'Siby1lA',
                     age: 34
-                }
+                },
+                inputData: 'hello',
+                type: 'text',
+                link: 'https://www.youtube.com/'
             },
             methods: {
+                getLink(channel){
+                    return this.link + channel;
+                },
                 netxYear: function(greeting){
                     return greeting + '! ' + this.person.name + ' 는 내년에 ' + (this.person.age + 1) + '살입니다.';
                 },
