@@ -10,7 +10,9 @@
 <body>
     <div class="app">
         <form v-on:submit.prevent="submit()">
-            <input type="text">
+            <!-- <input type="text" :value="text" @keyup="updateText"><br> -->
+            <input type="text" v-model="text"><br>
+            {{text}}<br>
             <button type="submit">Submit</button>
         </form>
     </div>
@@ -18,7 +20,8 @@
         new Vue({
             el: '.app',
             data: {
-                year: 2021
+                year: 2021,
+                text: 'text'
             },
             methods: {
                 plus(){
@@ -30,7 +33,10 @@
                 submit(){
                     alert('서브밋');
                     console.log('hello')
-                }
+                },
+                // updateText(event){
+                //     this.text = event.target.value;
+                // }
             }
         })
     </script>
