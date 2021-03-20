@@ -9,3 +9,56 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+.header{
+    width: 100%;
+    background-color: #3b5999;;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+.word-display{
+    margin-top: 3rem;
+    font-size: 80px;
+    color: #3b5999;
+}
+
+.word-input-box{
+    margin-top: 2rem;
+}
+
+.word-input{
+    padding: 0.5rem;
+    width: 360px;
+}
+
+.game-info{
+    margin: 2rem;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 280px;
+}
+
+.time, .score{
+    font-size: 30px;
+}
+
+.btn{
+    width: 200px;
+    height: 35px;
+    background-color: #3b5999;;
+    color: white;
+    border: noen;
+    margin-top: 3rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading{
+    background-color: #ccc;
+    cursor: not-allowed;
+}
