@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,31 +9,22 @@
 </head>
 <body>
     <div class="app">
-        {{netxYear('하이')}}
-        <input v-bind:type="type" :value="inputData">
-        <a :href="getLink('buzzbean11')">채널 링크</a>
+        {{year}} <br>
+        <button v-on:click="plus()">더하기</button>
+        <button v-on:click="minus()">빼기</button>
     </div>
     <script>
         new Vue({
             el: '.app',
             data: {
-                person: {
-                    name: 'Siby1lA',
-                    age: 34
-                },
-                inputData: 'hello',
-                type: 'text',
-                link: 'https://www.youtube.com/'
+                year: 2021
             },
             methods: {
-                getLink(channel){
-                    return this.link + channel;
+                plus(){
+                    this.year++;
                 },
-                netxYear: function(greeting){
-                    return greeting + '! ' + this.person.name + ' 는 내년에 ' + (this.person.age + 1) + '살입니다.';
-                },
-                netxYears(greeting){
-                    return greeting + '! ' + this.person.name + ' 는 내년에 ' + (this.person.age + 1) + '살입니다.';
+                minus(){
+                    this.year--;
                 }
             }
         })
