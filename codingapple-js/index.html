@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .alert-box{
+            background: skyblue;
+            color: skyblue;
+            padding: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="alert-box" id="box">Alert 박스</div>
+    <button onclick="openbtn()">오픈</button>
+    <button onclick="closebtn()">닫기</button>
+
+    <script>
+        function openbtn(){
+            document.getElementById('box').style.display = 'block';
+        }
+        function closebtn(){
+            document.getElementById('box').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
