@@ -1,1 +1,1 @@
-# react native study
+# expo react native study
