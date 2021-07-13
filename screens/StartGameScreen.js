@@ -11,107 +11,125 @@ import {
 import Card from '../components/Card';
 import Colors from '../constants/Colors';
 import Input from '../components/Input';
-import NumberContainer from '../components/NumberCOntainer';
+import NumberContainer from '../components/NumberContainer';
 
 const StartGameScreen = props => {
-    const [enteredValue, setenteredValue] = useState('');
+    const [enteredValue, setEnteredValue] = useState('');
     const [confirmed, setConfirmed] = useState(false);
     const [selectedNumber, setSelectedNumber] = useState();
-
+  
     const numberInputHandler = inputText => {
-        setenteredValue(inputText.replace(/[^0-9]/g, ''));
+      setEnteredValue(inputText.replace(/[^0-9]/g, ''));
     };
-
+  
     const resetInputHandler = () => {
-        setenteredValue('');
-        setConfirmed(false);
+      setEnteredValue('');
+      setConfirmed(false);
     };
-
+  
     const confirmInputHandler = () => {
-        const choseNumber = parseInt(enteredValue)
-        if(isNaN(choseNumber) || choseNumber <= 0 || choseNumber > 99){
-            Alert.alert('Invalid number!', 'Number has to be a number between 1 and 99.', [{text: 'Okay', style: 'destructive', onPress: resetInputHandler }]);
-            return;
-        }
-        setConfirmed(true);
-        setSelectedNumber(choseNumber);
-        setenteredValue('');
-        Keyboard.dismiss();
+      const chosenNumber = parseInt(enteredValue);
+      if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+        Alert.alert(
+          'Invalid number!',
+          'Number has to be a number between 1 and 99.',
+          [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler }]
+        );
+        return;
+      }
+      setConfirmed(true);
+      setSelectedNumber(chosenNumber);
+      setEnteredValue('');
+      Keyboard.dismiss();
     };
-
+  
     let confirmedOutput;
-
-    if(confirmed){
-        confirmedOutput = (
-            <Card style={styles.summaryContainer}>
-                <Text>You selected</Text>
-                <NumberContainer>{selectedNumber}</NumberContainer>
-                <Button title="START GAME" />
-            </Card>
-            
-        ) 
+  
+    if (confirmed) {
+      confirmedOutput = (
+        <Card style={styles.summaryContainer}>
+          <Text>You selected</Text>
+          <NumberContainer>{selectedNumber}</NumberContainer>
+          <Button title="START GAME" onPress={() => props.onStartGame(selectedNumber)}></Button>
+        </Card>
+      );
     }
-
+  
     return (
-        <TouchableWithoutFeedback onPress={() => {
-            Keyboard.dismiss();
-        }}>
-            <View style={styles.screen}>
-                <Text style={styles.title}>Start a New Game</Text>
-                <Card style={styles.inputContainer}>
-                    <Text>Select a Number</Text>
-                    <Input style={styles.input}
-                    blurOnSubmit
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    keyboardType="numeric"
-                    maxLength={2}
-                    onChangeText={numberInputHandler}
-                    vlaue={enteredValue}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >
+        <View style={styles.screen}>
+          <Text style={styles.title}>Start a New Game!</Text>
+          <Card style={styles.inputContainer}>
+            <Text>Select a Number</Text>
+            <Input
+              style={styles.input}
+              blurOnSubmit
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="number-pad"
+              maxLength={2}
+              onChangeText={numberInputHandler}
+              value={enteredValue}
+            />
+            <View style={styles.buttonContainer}>
+              <View style={styles.button}>
+                <Button
+                  title="Reset"
+                  onPress={resetInputHandler}
+                  color={Colors.accent}
                 />
-                    <View style={styles.btnContainer}>
-                        <View style={styles.btn} ><Button color={Colors.accnet} title="Reset" onPress={resetInputHandler} /></View>
-                        <View style={styles.btn} ><Button color={Colors.primary} title="Confirm" onPress={confirmInputHandler} /></View>
-                    </View>
-                </Card>
-                {confirmedOutput}
+              </View>
+              <View style={styles.button}>
+                <Button
+                  title="Confirm"
+                  onPress={confirmInputHandler}
+                  color={Colors.primary}
+                />
+              </View>
             </View>
-        </TouchableWithoutFeedback>
+          </Card>
+          {confirmedOutput}
+        </View>
+      </TouchableWithoutFeedback>
     );
-};
-
-const styles = StyleSheet.create({
+  };
+  
+  const styles = StyleSheet.create({
     screen: {
-        flex: 1,
-        padding: 10,
-        alignItems: 'center',
+      flex: 1,
+      padding: 10,
+      alignItems: 'center'
     },
     title: {
-        fontSize: 20,
-        marginVertical: 10
+      fontSize: 20,
+      marginVertical: 10,
     },
     inputContainer: {
-        width: 300,
-        maxWidth: '80%',
-        alignItems: 'center',
+      width: 300,
+      maxWidth: '80%',
+      alignItems: 'center'
     },
-    btnContainer : {
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'space-between',
-        paddingHorizontal: 15
+    buttonContainer: {
+      flexDirection: 'row',
+      width: '100%',
+      justifyContent: 'space-between',
+      paddingHorizontal: 15
     },
-    btn: {
-        width: 100,
+    button: {
+      width: 100
     },
     input: {
-        width: 50,
-        textAlign: 'center',
+      width: 50,
+      textAlign: 'center'
     },
     summaryContainer: {
-        marginTop: 20,
-        alignItems: 'center',
+      marginTop: 20,
+      alignItems: 'center'
     }
-});
-
-export default StartGameScreen;
+  });
+  
+  export default StartGameScreen;
