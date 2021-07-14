@@ -1,15 +1,31 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, Image } from 'react-native';
-import GameScreen from './GameScreen';
-
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
+import Colors from '../constants/Colors';
 const GameOverScreen = props => {
     return (
         <View style={styles.screen}>
-            <Text>The Game is Over!</Text>
-            <Image source={require('../assets/success.png')}/>
-            <Text>Number of rounds: {props.roundsNumber} </Text>
-            <Text>Number was: {props.userNumber} </Text>
+            <TitleText>The Game is Over!</TitleText>
+            <View style={styles.imagecontainer}>
+                <Image 
+                fadeDuration={1000}
+                source={require('../assets/success.png')}
+                //source={{uri: 'https://dthezntil550i.cloudfront.net/3h/latest/3h1712251157030200004246919/7661d345-5917-4a27-bea7-f1275e66de39.png'}}
+                style={styles.image}
+                resizeMode="cover"/>
+            </View>
+            <View style={styles.resultContainer}>
+                <BodyText style={styles.resultText}>
+                    Your phone needed{' '} 
+                    <Text style={styles.highlight}>{props.roundsNumber}</Text> 
+                    {' '}roudns to guess the number{' '}
+                    <Text style={styles.highlight}>{props.userNumber}</Text>
+                </BodyText>
+            </View>
+            
             <Button title="Re Start" onPress={props.onRestart} />
+
         </View>
     )
 };
@@ -19,9 +35,34 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    imagecontainer: {
+        width: 300,
+        height: 300,
+        borderRadius: 150,
+        borderWidth: 3,
+        borderColor: 'black',
+        overflow: 'hidden',
+        marginVertical: 30,
 
-
-    }
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    },
+    resultContainer: {
+        marginHorizontal: 30,
+        marginVertical: 15,
+    },
+    resultText: {
+        textAlign: 'center',
+        fontSize: 20
+    },
+    highlight: {
+        color: Colors.primary,
+        fontFamily: 'open-sans-bold'
+    },
+    
 });
 
 export default GameOverScreen;
