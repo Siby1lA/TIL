@@ -6,6 +6,8 @@ import DefaultStyles from '../constants/Default-styles';
 import MainButton from '../components/MainButton';
 import { Ionicons } from '@expo/vector-icons';
 import BodyText from '../components/BodyText';
+import * as ScreenOrientation from 'expo-screen-orientation';
+
 const generateRandomBetween = (min, max, exclude) => {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -24,20 +26,39 @@ const renderListItem = (listLength, itemData) => (
 );
 
 const GameScreen = props => {
+    //회전잠금
+    //ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
     const initialCuess = generateRandomBetween(1, 100, props.userChoice)
     const [currentGuess, setCurrentGuess] = useState(initialCuess);
-    
+    const [availableDeviceWidth, setAvailableDeviceWidth] = useState(
+        Dimensions.get('window').width
+        );
+    const [availableDeviceHeight, setAvailableDeviceHeight] = useState(
+        Dimensions.get('window').height
+        );
+
     const [pastGuesses, setPastGuesses] = useState([initialCuess.toString()]);
     const currentLow = useRef(1);
     const currentHigh = useRef(100);
     
     const {userChoice, onGameOver} = props;
 
-   useEffect(() => {
+    useEffect(() => {
+        const updateLayout = () => {
+            setAvailableDeviceWidth(Dimensions.get('window').width);
+            setAvailableDeviceHeight(Dimensions.get('window').height);
+        }
+        Dimensions.addEventListener('change', updateLayout)
+        return () => {
+            Dimensions.removeEventListener('change', updateLayout)
+        }
+    });
+
+    useEffect(() => {
        if(currentGuess === props.userChoice){
            props.onGameOver(pastGuesses.length);
        }
-   }, [currentGuess, userChoice, onGameOver]);
+    }, [currentGuess, userChoice, onGameOver]);
     const nextGuessHandler = direction => {
         if((direction === 'lower' && currentGuess < props.userChoice) || (direction === 'graeater' && currentGuess > props.userChoice)){
             Alert.alert('거짓말ㄴ', '잘못됨', [{text: 'Sorry!', style: 'cancel'}]);
@@ -54,6 +75,34 @@ const GameScreen = props => {
         setPastGuesses(curPastGuesses => [nextNumber.toString(), ...curPastGuesses ]);
     
     };
+
+    if (availableDeviceHeight < 500) {
+        return (
+            <View style={styles.screen}>
+            <Text style={DefaultStyles.title}>PC</Text>
+            
+            <View style={styles.controls}>
+                <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
+                    <Ionicons name="md-remove" size={24} color="white" />
+                </MainButton>
+                <NumberContainer>{currentGuess}</NumberContainer>
+                <MainButton onPress={nextGuessHandler.bind(this, 'graeater')}>
+                    <Ionicons name="md-add" size={24} color="white" />
+                </MainButton>
+            </View>
+            <View style={styles.listContainer}>
+                 
+                <FlatList 
+                    keyExtractor={(item) => item} 
+                    data={pastGuesses} 
+                    renderItem={renderListItem.bind(this, pastGuesses.length)}
+                    contentContainerStyle={styles.list}
+                    />
+            </View>
+            
+        </View>
+        );
+    }
 
     return (
         <View style={styles.screen}>
@@ -91,7 +140,7 @@ const styles = StyleSheet.create({
     },
     btnContainer: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         marginTop: Dimensions.get('window').height > 600 ? 20 : 10,
         width: 400,
         maxWidth: '90%',
@@ -116,7 +165,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
     },
-    
+    controls: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '80%',
+    }
 });
 
 export default GameScreen;

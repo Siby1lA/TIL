@@ -57,6 +57,7 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
+      <StatusBar></StatusBar>
       <Header title="Guess a Number" />
       {content}
     </View>
