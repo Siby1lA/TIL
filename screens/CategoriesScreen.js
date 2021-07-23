@@ -1,24 +1,41 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity,  } from 'react-native';
+import CategoryGridTile from '../components/CategoryGridTile';
+import { CATEGORIES } from '../data/dummy-data';
 
 const CategoriesScreen = props => {
+
+    const renderGridItem = itemData => {
+        return (
+            <CategoryGridTile title={itemData.item.title}
+            color={itemData.item.color}
+            onSelect={() => {
+                props.navigation.navigate({routeName: 'CategoryMeals', params: {
+                    categoryId: itemData.item.id
+                }});
+            }}/>
+        );
+    };
+
     return (
-        <View style={styles.screen}>
-            <Text>The CategoriesScreen!!</Text>
-            <Button title="Go to Meals!" onPress={() => {
-                props.navigation.navigate({routeName: 'CategoryMeals'});  //네비게이트 말고 push도 있음 이건 위에 올려서 중첩되게
-            }}/> 
-           
-        </View>
+        <FlatList style={styles.screen} keyExtractor={(item, index) => item.id} 
+        data={CATEGORIES} 
+        renderItem={renderGridItem} 
+        numColumns={2}/>
     );
 };  
 //replace 하면 뒤로가기 없게 다음으로 넘어감
+
+CategoriesScreen.navigationOptions = {
+    headerTitle: 'Meal Categories',
+  };
+  
+
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
+        backgroundColor: 'white'
+    },
+    
 });
 
 export default CategoriesScreen;
