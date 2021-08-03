@@ -21,7 +21,7 @@ const CategoryGridTile = props => {
 const styles = StyleSheet.create({
     gridItem: {
         flex: 1,
-        height: 150,
+        height: 105,
         margin: 15,
         borderRadius: 10,
         overflow: Platform.OS === 'android' && Platform.Version >= 21 ?  'hidden' : 'visible',

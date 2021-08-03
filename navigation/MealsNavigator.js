@@ -9,6 +9,17 @@ import MealDetailScreen from '../screens/MealDetailScreen';
 import Colors from '../constants/Colors';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
+import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+
+const defalutStackNavigationOptions = {
+    headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
+        borderBottomColor: '#ccc',
+        borderBottomWidth: 1,
+      },
+      headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
+      headerTitle: 'A Screen'
+}
 
 const MealsNavigator = createStackNavigator({
     Categories: {
@@ -22,19 +33,18 @@ const MealsNavigator = createStackNavigator({
 }, {
     //initialRouteName: 'Categories',
 
-    defaultNavigationOptions: {
-        headerStyle: {
-            backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
-            borderBottomColor: '#ccc',
-            borderBottomWidth: 1,
-          },
-          headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor
-    
-    },
+    defaultNavigationOptions:  defalutStackNavigationOptions
     
 });
 
-const MealsFavTabNavigator = createBottomTabNavigator({
+const FavNavigatior = createStackNavigator({
+    Favorites: FavoritesScreen,
+    MealDetail: MealDetailScreen
+}, {
+    defaultNavigationOptions: defalutStackNavigationOptions
+} );
+
+const tabScreenConfig = {
     Meals: {
         screen: MealsNavigator,
         navigationOptions: {
@@ -46,12 +56,13 @@ const MealsFavTabNavigator = createBottomTabNavigator({
                         size={25} 
                         color={tabInfo.tintColor}
                     />
-                )
-            }
+                );
+            },
+            
         }
     },
     Favorites: {
-        screen: FavoritesScreen,
+        screen: FavNavigatior,
         navigationOptions: {
             tabBarLabel: '즐겨찾기',
             tabBarIcon: (tabInfo) => {
@@ -66,6 +77,18 @@ const MealsFavTabNavigator = createBottomTabNavigator({
             }
         }
     }
+};
+
+const MealsFavTabNavigator = Platform.OS === 'android' 
+    ? createMaterialBottomTabNavigator(tabScreenConfig, {
+        activeTintColor: Colors.accentColor,
+        shifting: true,
+        barStyle: {
+            backgroundColor: Colors.primaryColor
+        }
+    })
+    : createBottomTabNavigator(tabScreenConfig, {
+    
 }, {
     tabBarOptions: {
         activeTintColor: Colors.accentColor
