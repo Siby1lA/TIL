@@ -1,11 +1,13 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createDrawerNavigator } from 'react-navigation-drawer';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import MealDetailScreen from '../screens/MealDetailScreen';
+import FilterScreen from '../screens/FiltersScreen';
 import Colors from '../constants/Colors';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,6 +18,12 @@ const defalutStackNavigationOptions = {
         backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
         borderBottomColor: '#ccc',
         borderBottomWidth: 1,
+      },
+      headerTitleStyle: {
+          fontFamily: 'open-sans-bold'
+      },
+      headerBackTitleStyle: {
+          fontFamily: 'open-sans'
       },
       headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
       headerTitle: 'A Screen'
@@ -58,7 +66,7 @@ const tabScreenConfig = {
                     />
                 );
             },
-            
+            // tabBarLabel: <Text style={{fontFamily: 'open-sans'}}>식사</Text>,
         }
     },
     Favorites: {
@@ -88,11 +96,40 @@ const MealsFavTabNavigator = Platform.OS === 'android'
         }
     })
     : createBottomTabNavigator(tabScreenConfig, {
-    
+        tabBarOptions: {
+            labelStyle: {
+                fontFamily: 'open-sans'
+            },
+            activeTintColor: Colors.accentColor
+        }
+
+    });
+
+const FiltersNavigator = createStackNavigator({
+    Filters: FilterScreen
+},
+{
+    // navigationOptions: {
+    //     drawerLabel: 'Filters!!!'
+    // },
+    defaultNavigationOptions:  defalutStackNavigationOptions
+});
+
+const MainNavigator = createDrawerNavigator({
+    MealsFavs: {
+       screen: MealsFavTabNavigator,
+       navigationOptions: {
+           drawerLabel: 'Meals'
+       }
+    },
+    Filters: FiltersNavigator
 }, {
-    tabBarOptions: {
-        activeTintColor: Colors.accentColor
+    contentOptions: {
+        activeTintColor: Colors.accentColor,
+        labelStyle: {
+            fontFamily: 'open-sans-bold'
+        }
     }
 });
 
-export default createAppContainer(MealsFavTabNavigator);
+export default createAppContainer(MainNavigator);
