@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import { useState } from "react";
+const useInput = (init, vail) => {
+  const [value, setValue] = useState(init);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    let will = true;
+    if (typeof vail === "function") {
+      will = vail(value);
+    }
+    if (will) {
+      setValue(value);
+    }
+  };
+  return { value, onChange };
+};
+const App = () => {
+  const maxLen = (value) => !value.includes("@");
+  const name = useInput("Mr.", maxLen);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Hello</h1>
+      <input placeholder="Name" {...name} />
     </div>
   );
-}
-
+};
 export default App;
