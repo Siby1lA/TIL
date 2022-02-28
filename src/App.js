@@ -1,27 +1,33 @@
 import { useState } from "react";
-const useInput = (init, vail) => {
-  const [value, setValue] = useState(init);
-  const onChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    let will = true;
-    if (typeof vail === "function") {
-      will = vail(value);
-    }
-    if (will) {
-      setValue(value);
-    }
+const useTabs = (initTab, allTabs) => {
+  const [currentIndex, setCurrentIndex] = useState(initTab);
+  if (!allTabs || !Array.isArray(allTabs)) {
+    return;
+  }
+
+  return {
+    currentItem: allTabs[currentIndex],
+    changeItem: setCurrentIndex,
   };
-  return { value, onChange };
 };
+const content = [
+  {
+    tab: "Section1",
+    content: "I'm Section1",
+  },
+  {
+    tab: "Section2",
+    content: "I'm Section2",
+  },
+];
 const App = () => {
-  const maxLen = (value) => !value.includes("@");
-  const name = useInput("Mr.", maxLen);
+  const { currentItem, changeItem } = useTabs(0, content);
   return (
-    <div>
-      <h1>Hello!!</h1>
-      <input placeholder="Name" {...name} />
+    <div className="App">
+      {content.map((section, index) => (
+        <button onClick={() => changeItem(index)}>{section.tab}</button>
+      ))}
+      <div>{currentItem.content}</div>
     </div>
   );
 };
