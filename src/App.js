@@ -20,7 +20,7 @@ const App = () => {
   const name = useInput("Mr.", maxLen);
   return (
     <div>
-      <h1>Hello</h1>
+      <h1>Hello!!</h1>
       <input placeholder="Name" {...name} />
     </div>
   );
