@@ -1,20 +1,12 @@
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 
-const useTitle = (initialTitle) => {
-  const [title, setTitle] = useState(initialTitle);
-  const updateTitle = () => {
-    const htmlTitle = document.querySelector("title");
-    htmlTitle.innerText = title;
-  };
-  useEffect(updateTitle, [title]);
-  return setTitle;
-};
 const App = () => {
-  const titleUpdater = useTitle("Loading...");
-  setTimeout(() => titleUpdater("Home"), 2000);
+  const input = useRef(); //getElementById()와 같다.
+  setTimeout(() => input.current.focus(), 5000);
   return (
     <div>
       <div>hi</div>
+      <input ref={input} placeholder="la" />
     </div>
   );
 };
