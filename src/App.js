@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 
+const useTitle = (initialTitle) => {
+  const [title, setTitle] = useState(initialTitle);
+  const updateTitle = () => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerText = title;
+  };
+  useEffect(updateTitle, [title]);
+  return setTitle;
+};
 const App = () => {
-  const sayHello = () => console.log("Hello");
-  useEffect(() => {
-    sayHello(); //useEffect(sayHello(), []);도 가능 [] == dep
-  }, []);
-  const [number, setNumber] = useState(0);
-  const [anumber, setAnumber] = useState(0);
+  const titleUpdater = useTitle("Loading...");
+  setTimeout(() => titleUpdater("Home"), 2000);
   return (
     <div>
       <div>hi</div>
-      <button onClick={() => setNumber(number + 1)}>{number}</button>
-      <button onClick={() => setAnumber(anumber + 1)}>{anumber}</button>
     </div>
   );
 };
