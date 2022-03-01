@@ -1,27 +1,26 @@
-//버전업으로 인한 useEffect 문제 생김 해결법 ???
-import { useEffect } from "react";
-const useBeForeLeave = (onBeFore) => {
-  if (typeof onBeFore !== "function") {
-    return;
-  }
-  const handle = (event) => {
-    const { clientY } = event;
-    if (clientY <= 0) {
-      onBeFore();
-    }
-    onBeFore();
-  };
+import { useEffect, useRef } from "react";
+
+const useFadeIn = (duration = 1, delay = 0) => {
+  // if (typeof duration !== "number" || typeof delay != "number") {
+  //   return;
+  // }
+  const element = useRef();
   useEffect(() => {
-    document.addEventListener("mouseleave", handle);
-    return () => document.removeEventListener("mouseleave", handle);
+    if (element.current) {
+      const { current } = element;
+      current.style.transition = `opacity ${duration}s ease-in-out ${delay}s`;
+      current.style.opacity = 1;
+    }
   }, []);
+  return { ref: element, style: { opacity: 0 } };
 };
 const App = () => {
-  const begForLife = () => console.log("pls dont leave");
-  useBeForeLeave(begForLife);
+  const fadeInH1 = useFadeIn(1, 2);
+  const fadeInP = useFadeIn(5, 10);
   return (
     <div>
-      <h1>Hello</h1>
+      <h1 {...fadeInH1}>Hello</h1>
+      <p {...fadeInP}>lorem ipsum lalalalal</p>
     </div>
   );
 };
