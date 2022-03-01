@@ -1,27 +1,20 @@
-const useConfirm = (message = "", onConfirm, onCancel) => {
-  if (!onConfirm && typeof onConfirm !== "function") {
-    return;
-  }
-  if (onCancel && typeof onCancel !== "function") {
-    return;
-  }
-  const confrimAction = () => {
-    if (window.confirm(message)) {
-      onConfirm();
-    } else {
-      onCancel();
-    }
+const usePreventLeave = (onLeaving) => {
+  const listener = (event) => {
+    event.preventDefault();
+    event.returnValue = "";
   };
-  return confrimAction;
+  const enablePrevent = () => window.addEventListener("beforeunload", listener); //beforeunload는 윈도우가 닫히기 전 function 실행을 허락함
+  const disablePrevent = () =>
+    window.removeEventListener("beforeunload", listener);
+  return { enablePrevent, disablePrevent };
 };
-const App = () => {
-  const deleteWorld = () => console.log("Deleteing the world");
-  const abort = () => console.log("Aborted");
-  const confirmDelete = useConfirm("Are you sure", deleteWorld, abort);
 
+const App = () => {
+  const { enablePrevent, disablePrevent } = usePreventLeave();
   return (
     <div>
-      <button onClick={confirmDelete}>Delete the world</button>
+      <button onClick={enablePrevent}>Protect</button>
+      <button onClick={disablePrevent}>unProtect</button>
     </div>
   );
 };
