@@ -1,20 +1,27 @@
-const usePreventLeave = (onLeaving) => {
-  const listener = (event) => {
-    event.preventDefault();
-    event.returnValue = "";
+//버전업으로 인한 useEffect 문제 생김 해결법 ???
+import { useEffect } from "react";
+const useBeForeLeave = (onBeFore) => {
+  if (typeof onBeFore !== "function") {
+    return;
+  }
+  const handle = (event) => {
+    const { clientY } = event;
+    if (clientY <= 0) {
+      onBeFore();
+    }
+    onBeFore();
   };
-  const enablePrevent = () => window.addEventListener("beforeunload", listener); //beforeunload는 윈도우가 닫히기 전 function 실행을 허락함
-  const disablePrevent = () =>
-    window.removeEventListener("beforeunload", listener);
-  return { enablePrevent, disablePrevent };
+  useEffect(() => {
+    document.addEventListener("mouseleave", handle);
+    return () => document.removeEventListener("mouseleave", handle);
+  }, []);
 };
-
 const App = () => {
-  const { enablePrevent, disablePrevent } = usePreventLeave();
+  const begForLife = () => console.log("pls dont leave");
+  useBeForeLeave(begForLife);
   return (
     <div>
-      <button onClick={enablePrevent}>Protect</button>
-      <button onClick={disablePrevent}>unProtect</button>
+      <h1>Hello</h1>
     </div>
   );
 };
