@@ -5,7 +5,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(authService.currentUser);
   return (
     <>
-      <AppRouter isLoggedIn={isLoggedIn} />;
+      <AppRouter isLoggedIn={isLoggedIn} />
       <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
     </>
   );
