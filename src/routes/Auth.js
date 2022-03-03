@@ -1,7 +1,9 @@
 import { authService } from "fbase";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import React, { useState } from "react";
 const Auth = () => {
@@ -40,6 +42,16 @@ const Auth = () => {
     }
   };
   const toggleAccount = () => setNewAccount((prev) => !prev);
+  const onSocialClick = async (event) => {
+    const {
+      target: { name },
+    } = event;
+    if (name === "google") {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(authService, provider);
+      //const credential = GoogleAuthProvider.credentialFromResult(result);
+    }
+  };
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -66,7 +78,9 @@ const Auth = () => {
         {newAccount ? "Sign In" : "Create Account"}
       </span>
       <div>
-        <button>Continue with Google</button>
+        <button onClick={onSocialClick} name="google">
+          Continue with Google
+        </button>
       </div>
     </div>
   );
