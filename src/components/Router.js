@@ -15,7 +15,7 @@ const AppRouter = (props) => {
       <Routes>
         {props.isLoggedIn ? (
           <>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home userObj={props.userObj} />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<Navigate replace to="/" />} />
           </>
