@@ -59,7 +59,7 @@ const Home = (props) => {
     };
     reader.readAsDataURL(theFile);
   };
-  const onClearPhotoClick = () => setAttachment(null);
+  const onClearAttachment = () => setAttachment(null);
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -75,7 +75,7 @@ const Home = (props) => {
         {attachment && (
           <div>
             <img src={attachment} width="50px" height="50px" />
-            <button onClick={onClearPhotoClick}>Clear</button>
+            <button onClick={onClearAttachment}>Clear</button>
           </div>
         )}
       </form>
