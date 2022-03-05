@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { dbService } from "fbase";
+import { v4 as uuidv4 } from "uuid";
+import { dbService, storageService } from "fbase";
 import {
   addDoc,
   collection,
@@ -8,6 +9,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import Nweet from "components/Nweet";
+import { ref, uploadString } from "@firebase/storage";
 const Home = (props) => {
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
@@ -27,17 +29,20 @@ const Home = (props) => {
   }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const docRef = await addDoc(collection(dbService, "nweets"), {
-        text: nweet,
-        createdAt: Date.now(),
-        creatorId: props.userObj.uid,
-      });
-      setNweet("");
-      console.log("Document written with ID: ", docRef.id);
-    } catch (error) {
-      console.error("Error adding document: ", error);
-    }
+    const fileRef = ref(storageService, `${props.userObj.uid}/${uuidv4()}`);
+    const response = await uploadString(fileRef, attachment, "data_url");
+    console.log(response);
+    // try {
+    //   const docRef = await addDoc(collection(dbService, "nweets"), {
+    //     text: nweet,
+    //     createdAt: Date.now(),
+    //     creatorId: props.userObj.uid,
+    //   });
+    //   setNweet("");
+    //   console.log("Document written with ID: ", docRef.id);
+    // } catch (error) {
+    //   console.error("Error adding document: ", error);
+    // }
   };
   const onChagne = (event) => {
     const {
