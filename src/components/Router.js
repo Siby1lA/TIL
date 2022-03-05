@@ -11,7 +11,7 @@ import Profile from "routes/Profile";
 const AppRouter = (props) => {
   return (
     <Router>
-      {props.isLoggedIn && <Navigation />}
+      {props.isLoggedIn && <Navigation userObj={props.userObj} />}
       <Routes>
         {props.isLoggedIn ? (
           <>

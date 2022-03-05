@@ -6,8 +6,10 @@ import {
   where,
   orderBy,
 } from "@firebase/firestore";
-import React, { useEffect } from "react";
+import { updateProfile } from "@firebase/auth";
+import React, { useEffect, useState } from "react";
 const Profile = ({ userObj }) => {
+  const [newDisplayName, setNewDisplayname] = useState(userObj.displayName);
   const onLogoutClick = () => {
     authService.signOut();
   };
@@ -25,8 +27,29 @@ const Profile = ({ userObj }) => {
   useEffect(() => {
     getMyNweets();
   }, []);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewDisplayname(value);
+  };
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    if (userObj.displayName !== newDisplayName) {
+      await updateProfile(userObj, { displayName: newDisplayName });
+    }
+  };
   return (
     <>
+      <form onSubmit={onSubmit}>
+        <input
+          value={newDisplayName}
+          onChange={onChange}
+          type="text"
+          placeholder="Display name"
+        />
+        <input type="submit" value="Update profile" />
+      </form>
       <button onClick={onLogoutClick}>Log out</button>
     </>
   );
