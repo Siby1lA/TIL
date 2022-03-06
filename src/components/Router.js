@@ -18,7 +18,12 @@ const AppRouter = (props) => {
             <Route path="/" element={<Home userObj={props.userObj} />} />
             <Route
               path="/profile"
-              element={<Profile userObj={props.userObj} />}
+              element={
+                <Profile
+                  refreshUser={props.refreshUser}
+                  userObj={props.userObj}
+                />
+              }
             />
             <Route path="*" element={<Navigate replace to="/" />} />
           </>

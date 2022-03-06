@@ -8,7 +8,7 @@ import {
 } from "@firebase/firestore";
 import { updateProfile } from "@firebase/auth";
 import React, { useEffect, useState } from "react";
-const Profile = ({ userObj }) => {
+const Profile = ({ userObj, refreshUser }) => {
   const [newDisplayName, setNewDisplayname] = useState(userObj.displayName);
   const onLogoutClick = () => {
     authService.signOut();
@@ -37,6 +37,7 @@ const Profile = ({ userObj }) => {
     event.preventDefault();
     if (userObj.displayName !== newDisplayName) {
       await updateProfile(userObj, { displayName: newDisplayName });
+      refreshUser();
     }
   };
   return (

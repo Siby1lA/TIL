@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import AppRouter from "components/Router";
 import { authService } from "fbase";
+
 function App() {
+  const [changeName, setChangeName] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const [init, setInit] = useState(false);
   useEffect(() => {
@@ -12,10 +14,17 @@ function App() {
       setInit(true);
     });
   }, []);
+  const refreshUser = () => {
+    setChangeName((prev) => !prev);
+  };
   return (
     <>
       {init ? (
-        <AppRouter userObj={userObj} isLoggedIn={Boolean(userObj)} />
+        <AppRouter
+          refreshUser={refreshUser}
+          userObj={userObj}
+          isLoggedIn={Boolean(userObj)}
+        />
       ) : (
         "Initializing..."
       )}
