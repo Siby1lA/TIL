@@ -10,7 +10,7 @@ import { updateProfile } from "@firebase/auth";
 import React, { useEffect, useState } from "react";
 const Profile = ({ userObj, refreshUser }) => {
   const [newDisplayName, setNewDisplayname] = useState(userObj.displayName);
-  const onLogoutClick = () => {
+  const onLogOutClick = () => {
     authService.signOut();
   };
   const getMyNweets = async () => {
@@ -41,18 +41,29 @@ const Profile = ({ userObj, refreshUser }) => {
     }
   };
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className="container">
+      <form onSubmit={onSubmit} className="profileForm">
         <input
           value={newDisplayName}
           onChange={onChange}
           type="text"
+          autoFocus
           placeholder="Display name"
+          className="formInput"
         />
-        <input type="submit" value="Update profile" />
+        <input
+          type="submit"
+          value="Update Profile"
+          className="formBtn"
+          style={{
+            marginTop: 10,
+          }}
+        />
       </form>
-      <button onClick={onLogoutClick}>Log out</button>
-    </>
+      <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+        Log Out
+      </span>
+    </div>
   );
 };
 export default Profile;

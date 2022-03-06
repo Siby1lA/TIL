@@ -12,28 +12,39 @@ const AppRouter = (props) => {
   return (
     <Router>
       {props.isLoggedIn && <Navigation userObj={props.userObj} />}
-      <Routes>
-        {props.isLoggedIn ? (
-          <>
-            <Route path="/" element={<Home userObj={props.userObj} />} />
-            <Route
-              path="/profile"
-              element={
-                <Profile
-                  refreshUser={props.refreshUser}
-                  userObj={props.userObj}
-                />
-              }
-            />
-            <Route path="*" element={<Navigate replace to="/" />} />
-          </>
-        ) : (
-          <>
-            <Route path="/" element={<Auth />} />
-            <Route path="*" element={<Navigate replace to="/" />} />
-          </>
-        )}
-      </Routes>
+      <div
+        style={{
+          maxWidth: 890,
+          width: "100%",
+          margin: "0 auto",
+          marginTop: 80,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Routes>
+          {props.isLoggedIn ? (
+            <>
+              <Route path="/" element={<Home userObj={props.userObj} />} />
+              <Route
+                path="/profile"
+                element={
+                  <Profile
+                    refreshUser={props.refreshUser}
+                    userObj={props.userObj}
+                  />
+                }
+              />
+              <Route path="*" element={<Navigate replace to="/" />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Auth />} />
+              <Route path="*" element={<Navigate replace to="/" />} />
+            </>
+          )}
+        </Routes>
+      </div>
     </Router>
   );
 };
