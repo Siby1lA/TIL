@@ -16,4 +16,6 @@
 
 ### 새 리엑트 프로젝트 생성
 
-`$ npx create-react-app app-name`
+```
+$ npx create-react-app app-name
+```
