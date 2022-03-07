@@ -19,3 +19,60 @@
 ```
 $ npx create-react-app app-name
 ```
+
+### 03 리액트 컴포넌트
+
+Hello.js
+
+```
+import React from 'react';
+function Hello() {
+  return <div>Hello</div>
+}
+export default Hello;
+
+```
+
+```
+import React from 'react';
+```
+
+리액트 컴포넌트를 만들 땐 리액트를 임포트해야한다.
+
+```
+export default Hello;
+```
+
+이 코드는 Hello라는 컴포넌트를 내보내겠다는 의미이다. 이러면 다른 컴포넌트에서 불러와서 사용 가능하다.
+
+```
+import Hello from './Hello';
+```
+
+다른 컴포넌트에서 사용하려면 import하고
+
+```
+<Hello />
+```
+
+이렇게 태그해서 사용하면 된다.
+
+### 04 JSX의 기본 규칙
+
+```
+return <div>Hello</div>;
+```
+
+얼핏 보면 HTML같은데 사실 JS이다.
+리액트에서 XML형태로 코드를 작성하면 babel이 JSX를 JS로 변환해준다.
+여기서 babel은 JS문법을 확장시켜주는 도구다 지원하지 않는 최신문법, 실험적인 문법들을 JS형태로 해줌으로써 실행 가능하게 해준다.
+
+- 태그는 꼳 닫혀 있어야 한다
+- input, br과 같은 태그도 Self Closing 사용
+- 두개 이상의 태그는 무조건 하나의 태그로 감싸져있어야된다
+- 단순히 div로 안감싸도 Frgment즉 <></>로 감싸도 된다
+- {}로 JS 값 사용 가능
+- 스타일은 backgroundColor처럼 camelCase형태 네이밍이다
+- CSS class는 calssName으로 설정한다
+- JSX내부 주석은 {/\* \*/}이다
+- 열리는 태그 내부에선 //로 작성 가능
