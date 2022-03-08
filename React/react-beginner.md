@@ -2,14 +2,14 @@
 
 ## 1장 리액트 입문
 
-### 01 리액트는 어쩌다 만들어졌을까?
+### 1. 리액트는 어쩌다 만들어졌을까?
 
 - 기존의JS의 DOM을 건드리는 작업은 번거롭고 난잡하다.
 - 리액트는 DOM을 다 날려버리고 다시 만들어서 보여준다.
 - 메모리에 가상DOM을 만들어서 성능과 속도도 잡음
 - 가상DOM과 브라우저DOM을 비교해 변경된 부분만 패치
 
-### 02 작업환경 준비
+### 2. 작업환경 준비
 
 - Node.js: Webpack, Babled사용하기 위해 기반인 Node.js가 필요
 - VSCode : 내가 주로 사용하는 에디터
@@ -20,7 +20,7 @@
 $ npx create-react-app app-name
 ```
 
-### 03 리액트 컴포넌트
+### 3. 리액트 컴포넌트
 
 Hello.js
 
@@ -30,7 +30,6 @@ function Hello() {
   return <div>Hello</div>
 }
 export default Hello;
-
 ```
 
 ```
@@ -57,7 +56,7 @@ import Hello from './Hello';
 
 이렇게 태그해서 사용하면 된다.
 
-### 04 JSX의 기본 규칙
+### 4. JSX의 기본 규칙
 
 ```
 return <div>Hello</div>;
@@ -76,3 +75,85 @@ return <div>Hello</div>;
 - CSS class는 calssName으로 설정한다
 - JSX내부 주석은 {/\* \*/}이다
 - 열리는 태그 내부에선 //로 작성 가능
+
+### 5. props 를 통해 컴포넌트에게 값 전달하기
+
+- props는 properties의 줄임말
+- 어떠한 값을 컴포넌트에게 전달할 때 props를 사용
+
+### props 기본 사용법
+
+```
+<Hello name="react" />
+```
+
+다른 컴포넌트에서 Hello 컴포넌트를 사용 할 때 name이라는 값을 전달한다.
+
+```
+import React from 'react';
+
+function Hello(props) {
+  return <div>안녕하세요 {props.name}</div>
+}
+
+export default Hello;
+```
+
+파라미터를 통해 조회 가능하다. name값을 조회하려면 props.name을 쓴다
+
+```
+function Hello({ color, name }) {
+  return <div style={{ color }}>안녕하세요 {name}</div>
+}
+```
+
+비 구조화 할당으로 더 간결하게 작성 가능하다.
+
+```
+Hello.defaultProps = {
+  name: '이름없음'
+}
+```
+
+props를 지정하지 않았을 때 기본값으로 설정하고 싶다면 defaultprops로 설정한다
+
+```
+import React from 'react';
+function Wrapper() {
+  const style = {
+    border: '2px solid black',
+    padding: '16px',
+  };
+  return (
+    <div style={style}>
+    </div>
+  )
+}
+```
+
+컴포넌트 태그 사이에 넣은 값을 조회 할 땐 props.children을 사용
+
+```
+<Wrapper>
+    <Hello name="react" color="red"/>
+    <Hello color="pink"/>
+</Wrapper>
+```
+
+위처럼 하면 Hello 컴포넌트가 보여지지 않는다
+
+```
+function Wrapper({ children }) {
+  const style = {
+    border: '2px solid black',
+    padding: '16px',
+  };
+  return (
+    <div style={style}>
+      {children}
+    </div>
+  )
+}
+```
+
+하지만 Wrapper에서 props.children을 렌더링 해주면 가능하다
