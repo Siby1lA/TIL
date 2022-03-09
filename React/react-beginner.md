@@ -1,15 +1,15 @@
 # 벨로퍼트님의 모던 리액트
 
-## 1장 리액트 입문
+# 1장 리액트 입문
 
-### 1. 리액트는 어쩌다 만들어졌을까?
+## 1. 리액트는 어쩌다 만들어졌을까?
 
 - 기존의JS의 DOM을 건드리는 작업은 번거롭고 난잡하다.
 - 리액트는 DOM을 다 날려버리고 다시 만들어서 보여준다.
 - 메모리에 가상DOM을 만들어서 성능과 속도도 잡음
 - 가상DOM과 브라우저DOM을 비교해 변경된 부분만 패치
 
-### 2. 작업환경 준비
+## 2. 작업환경 준비
 
 - Node.js: Webpack, Babled사용하기 위해 기반인 Node.js가 필요
 - VSCode : 내가 주로 사용하는 에디터
@@ -20,7 +20,7 @@
 $ npx create-react-app app-name
 ```
 
-### 3. 리액트 컴포넌트
+## 3. 리액트 컴포넌트
 
 Hello.js
 
@@ -56,7 +56,7 @@ import Hello from './Hello';
 
 이렇게 태그해서 사용하면 된다.
 
-### 4. JSX의 기본 규칙
+## 4. JSX의 기본 규칙
 
 ```
 return <div>Hello</div>;
@@ -76,7 +76,7 @@ return <div>Hello</div>;
 - JSX내부 주석은 {/\* \*/}이다
 - 열리는 태그 내부에선 //로 작성 가능
 
-### 5. props 를 통해 컴포넌트에게 값 전달하기
+## 5. props 를 통해 컴포넌트에게 값 전달하기
 
 - props는 properties의 줄임말
 - 어떠한 값을 컴포넌트에게 전달할 때 props를 사용
@@ -158,7 +158,7 @@ function Wrapper({ children }) {
 
 하지만 Wrapper에서 props.children을 렌더링 해주면 가능하다
 
-### 6. 조건부 렌더링
+## 6. 조건부 렌더링
 
 ```
 { isSpecial ? <b>*</b> : null }
@@ -178,7 +178,7 @@ true면 보여주고 아니면 숨기는 상황에서는 && 연산자가 더 간
 
 props 값 설정시 이름만 작성하고 값을 생략하면 ={true}로 설정한거와 같다.
 
-### 7. useState
+## 7. useState
 
 리액트16.8부터 Hooks라는 기능이 생겨 함수형 컴포넌트에도 상태관리가 가능하다
 usState는 리액트 Hooks 중 하나
@@ -194,14 +194,14 @@ const [number, setNumber] = useState(0);
 useState를 선언 방식이다, 첫번째 원소는 현 상태, 두번째 원소는 Setter함수이다.
 number의 값을 변경하려면 setNumber(값)을 넣어주면 된다
 
-### 8. Input 상태 관리
+## 8. Input 상태 관리
 
 - input의 onChange를 사용하면 이벤트 객체 e를 파라미터로 받아올 수 있다.
 - e.target은 이벤트가 발생한 DOM을 가리킨다.
 - e.target.value를 조회하면 input의 value을 알 수 있다.
 - input 상태관리시 value값도 설정해줘야 input 업데이트된다.
 
-### 9. 여러개의 Input 상태 관리
+## 9. 여러개의 Input 상태 관리
 
 input의 개수가 여러개 일땐 단순히 useState를 여러번 사용하고 onChange 도 여러개 만들어서 구현은 가능하지만 좋은 방법은 아니다.
 
@@ -243,7 +243,7 @@ name 속성으로 인해 어떤 tag를 수정하였는지 알 수 있어 객체�
 - 이게 불변성을 지킨다고도 함
 - 불변성을 지켜야 업뎃을 감지 하고 렌더링
 
-### 10. useRef로 특정 DOM 선택
+## 10. useRef로 특정 DOM 선택
 
 JS에서 특정 DOM을 선택할 때는 `getElementByID`, `querySelector` 같은 DOM Selector함수를 사용한다.
 리액트에서는 `useRef`라는 Hook를 사용한다.
@@ -264,7 +264,7 @@ return(
 - .current의 값은 우리가 지정한 DOM을 가르킴
 - nameInput.current.focus()형태로 사용
 
-### 11. 배열 렌더링하기
+## 11. 배열 렌더링하기
 
 ```
 <div>
@@ -315,13 +315,13 @@ function UserList() {
 }
 ```
 
-### 12. useRef로 컴포넌트 안의 변수 만들기
+## 12. useRef로 컴포넌트 안의 변수 만들기
 
 `useRef`는 DOM을 선택하는 용도 외에도 컴포넌트 안에서 조회 및 수정 할 수 있는 변수를 관리할 수 있다.
 `useRef`로 관리하는 변수는 값이 바뀌어도 리렌더링되지 않는다.
 useRef()에 파라미터를 넣어주면 이 값이 .current 값의 기본값이다.
 
-### 13. 배열에 항목 추가하기
+## 13. 배열에 항목 추가하기
 
 spread 연산자 사용
 
@@ -331,7 +331,7 @@ concat 함수 사용
 
 - setUsers(users.concat(user));
 
-### 14. 배열에 항목 제거하기
+## 14. 배열에 항목 제거하기
 
 ```
 <button onClick={() => onRemove(user.id)}>
@@ -347,7 +347,7 @@ setUsers(users.filter(user => user.id !== id));
 };
 ```
 
-### 15. 배열에 항목 수정하기
+## 15. 배열에 항목 수정하기
 
 boolean 값으로 자주 사용한다.
 
@@ -356,7 +356,7 @@ boolean 값으로 자주 사용한다.
 - style 속성에도 js사용 가능
 - boolean으로 on/off시 onToggle이란 함수명을 자주 사용
 
-### 16. useEffect를 사용하여 마운트/언마운트/업데이트시 할 작업 설정
+## 16. useEffect를 사용하여 마운트/언마운트/업데이트시 할 작업 설정
 
 - 마운트 : 컴포넌트가 처음 나타날 때
 - 언마운트 : 컴포넌트가 사라질 때
@@ -379,13 +379,92 @@ boolean 값으로 자주 사용한다.
 - Hook 함수
 - 첫번째 인자는 함수, 두번째 인자는 배열(deps)
 
-### cleanup
+### cleanup //언마운트
 
 - useEffect안에서 return 할 때 실행
 - useEffectdml 뒷정리
 
 ### deps
 
-- deps에 특정 값을 넣게 되면 마운트 될 때, 지정한 값이 업데이트 시 useEffect 실행
+- deps에 특정 값을 넣게 되면 처음과 값이 변경될 때 호출
 - deps에 값이 없다면 최신 값을 가리키지 않음
 - deps에 값이 없다면 컴포넌트 리렌더링 될 때마다 호출
+
+## 17. useMemo를 사용하여 연산한 값 재사용
+
+- Memo는 memoized를 의미 이는 이전에 계산한 값을 재사용한다는 의미
+- 첫번째 인수에는 함수 , 두번째 인수에는 배열
+- 두번째 인수의 값이(deps) 바뀔때만 함수 실행
+- 두번째 인수의 값이(deps) 안바뀌면 이전의 값을 재사용
+
+## 18. useCallback 을 사용하여 함수 재사용하기
+
+```
+const function = useCallback(() => {
+}, [])
+```
+
+`useCallback`은 `useMemo`와 비슷한 Hook이다.
+
+- 두번째 인자의 값이 변경될 때 까지 재사용
+- 특정 함수를 새로 만들지 않고 재사용하고 싶을때 사용
+- useMemo와 비슷, useMemo 기반이기 때문
+- deps 배열에 꼭 함수 안에서 사용하는 상태 혹은 props를 넣음
+- 랜더링되어도 함수의 값이 바뀌지 않는 한 기존 함수 반환
+
+단순히 컴포넌트 내에서 함수를 반복해서 생성하지 않기 위해 useCallback()을 사용하는건 큰 의미가 없거나 오히려 손해인 경우가 있는데
+언제 `useCallback()`를 써야 의미있는 성능 향상을 기대할 수 있을까
+
+### 의존 배열로 함수를 넘길 때
+
+많은 Hook 함수들이 불필요한 작업을 줄이기 위해 두 번째 인자로, 첫 번째 함수가 의존해야 하는 배열을 받는다.
+예로 `useEffect()`함수는 두 번째 인자로 넘어온 의존 배열이 변경될 때 첫 번째 인자로 넘어온 함수를 호출한다.
+
+```
+import React, { useState, useEffect } from "react";
+
+function Profile({ userId }) {
+  const [user, setUser] = useState(null);
+
+  const fetchUser = () =>
+    fetch(`https://your-api.com/users/${userId}`)
+      .then((response) => response.json())
+      .then(({ user }) => user);
+
+  useEffect(() => {
+    fetchUser().then((user) => setUser(user));
+  }, [fetchUser]);
+
+  // ...
+}
+```
+
+위의 코드를 보면 무한루프가 발생한다
+deps를 보면 fetchUser가 변경될 때만 호출이 되는데
+첫번째 인자가 fetchUser의 user값을 변경시켜 결국 무한 반복이 된다.
+
+```
+import React, { useState, useEffect } from "react";
+
+function Profile({ userId }) {
+  const [user, setUser] = useState(null);
+
+  const fetchUser = useCallback(
+    () =>
+      fetch(`https://your-api.com/users/${userId}`)
+        .then((response) => response.json())
+        .then(({ user }) => user),
+    [userId]
+  );
+
+  useEffect(() => {
+    fetchUser().then((user) => setUser(user));
+  }, [fetchUser]);
+
+  // ...
+}
+```
+
+이와 같은 상황에서 `useCallback()`을 이용해 userId가 변경되지 않는 한 재호출을 (리렌더링)방지할 수 있다.
+
+## 19. React.memo 를 사용한 컴포넌트 리렌더링 방지
