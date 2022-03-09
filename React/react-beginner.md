@@ -468,3 +468,196 @@ function Profile({ userId }) {
 이와 같은 상황에서 `useCallback()`을 이용해 userId가 변경되지 않는 한 재호출을 (리렌더링)방지할 수 있다.
 
 ## 19. React.memo 를 사용한 컴포넌트 리렌더링 방지
+
+`React.memo()`함수로 컴포넌트를 감싸주면 해당 컴포넌트는 props 값이 변경되지 않는 한 다시 호출되지 않는다.
+
+사용 예 :
+
+```
+import React from "react";
+
+function Light({ room, on, toggle }) {
+  console.log({ room, on });
+  return (
+    <button onClick={toggle}>
+      {room} {on ? "💡" : "⬛"}
+    </button>
+  );
+}
+```
+
+위의 컴포넌트를 아래 React.memo로 감싸준다
+
+```
+Light = React.memo(Light);
+```
+
+Light의 props가 변경되지 않는 한 다시 호출되지 않는다.
+
+```
+import React, { useState, useCallback } from "react";
+function SmartHome() {
+  const [masterOn, setMasterOn] = useState(false);
+  const [kitchenOn, setKitchenOn] = useState(false);
+  const [bathOn, setBathOn] = useState(false);
+
+  const toggleMaster = () => setMasterOn(!masterOn);
+  const toggleKitchen = () => setKitchenOn(!kitchenOn);
+  const toggleBath = () => setBathOn(!bathOn);
+
+  return (
+    <>
+      <Light room="침실" on={masterOn} toggle={toggleMaster} />
+      <Light room="주방" on={kitchenOn} toggle={toggleKitchen} />
+      <Light room="욕실" on={bathOn} toggle={toggleBath} />
+    </>
+  );
+}
+```
+
+SmartHome를 이용해서 침실의 조명을 켜보면 침실뿐만이 아니라 주방과 욕실까지 모든 방에 대한 Light 컴포넌트 함수가 호출된다.
+
+조명을 키거나 크는 방의 Light 컴포넌트 함수를 호출하려고 React.memo()를 사용했는데 왜 그럴까?
+
+toggle()함수들의 참조값이 SmartHoe 컴포넌트가 랜더링될 때 마다 모두 바뀌어버려서 그렇다.
+
+해결법은 모든 toggle 함수를 useCallback()으로 감싸고 두번 째 인자로 각 함수가 의존하고 있는 상태를 배열로 넘긴다.
+
+```
+const toggleMaster = useCallback(() => setMasterOn(!masterOn), [masterOn]);
+```
+
+이 후 조명을 켜보면 해당 Light 컴포넌트 함수만 호출 될 것이다.
+
+## 20. useReducer 를 사용하여 상태 업데이트 로직 분리하기
+
+현재 컴포넌트가 아닌 다른 곳에 state를 저장하고 싶을 때 사용
+여러개의 하위값을 포함하는 복잡한 State를 다루어야 할 때 사용
+
+```
+function reducer(state, action) {
+  // 새로운 상태를 만드는 로직
+  // const nextState = ...
+  return nextState;
+}
+```
+
+우선 useReducer Hook 함수를 알기 전에 reducer가 뭔지 설명하자면
+reducer는 현재 상태와 액션 객체를 파라미터로 받아와 새로운 상태를 반환해주는 함수입니다.
+reducer 에서 반환하는 상태는 곧 컴포넌트가 지닐 새로운 상태가 된다.
+
+### useReducer 형태
+
+- reducer : state를 업데이트 하는 역할
+- dispatch : state 업데이트를 위한 요구
+- action : 요구 내용
+
+```
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+여기서 `state`는 초기값이 `initialState` 이며 reducer를 통해서만 업데이트 가능하다.
+단 dispatch를 불러서 가능 부르면 reducer가 호출된다. 이 dispatch는 인자로 action을 전달한다 action을 통해서 state를 업데이트
+
+사용 예
+
+```
+import React, { useReducer } from 'react';
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'INCREMENT':
+            return state + 1;
+        case 'DECREMENT':
+            return state - 1;
+        default:
+            return state;
+    }
+}
+
+function Counter() {
+    const [number, dispatch] = useReducer(reducer, 0);
+
+    const onIncrease = () => {
+        dispatch({ type: 'INCREMENT' });
+    };
+
+    const onDecrease = () => {
+        dispatch({ type: 'DECREMENT' });
+    };
+
+    return (
+        <div>
+            <h1>{number}</h1>
+            <button onClick={onIncrease}>+1</button>
+            <button onClick={onDecrease}>-1</button>
+        </div>
+    );
+}
+export default Counter;
+```
+
+## 21. 커스텀 Hooks 만들기
+
+컴포넌트를 만들다보면 반복되는 로직이 자주 발생한다.
+예를 들어 input을 관리하는 코드는 관리 할 때마다 비슷한 코드가 반복되기에 이러한 상황에 커스터 Hooks를 만들어 반복되는 로직을 재사용하면 좋다.
+
+간단한 사용 예
+
+```
+import { useState } from "react";
+const useInput = (init, vail) => {
+  const [value, setValue] = useState(init);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    let will = true;
+    if (typeof vail === "function") {
+      will = vail(value);
+    }
+    if (will) {
+      setValue(value);
+    }
+  };
+  return { value, onChange };
+};
+const App = () => {
+  const maxLen = (value) => !value.includes("@");
+  const name = useInput("Mr.", maxLen);
+  return (
+    <div>
+      <h1>Hello</h1>
+      <input placeholder="Name" {...name} />
+    </div>
+  );
+};
+export default App;
+```
+
+## 22. Context API
+
+Context는 앱 안에서 전역적으로 사용 할 수 있는 값을 관리 할 수 있다.
+하지만 Context를 사용하면 컴포넌트를 재사용하기 어려워 질 수 있기에 꼭 필요할때만 사용하자
+
+```
+export const UserDispatch = React.createContext(null);
+```
+
+먼저 `Context`를 생성하는데 보통 js파일을 따로 만든다.
+위의 코드를 Context.js파일의 코드라고 생각하자
+
+```
+<Context.Provider value={}></Context.Provider>
+```
+
+사용 방법은 컴포넌트를 Provider로 감싸주고 값은 value에 넣는다 Provider로 감싸진 하위 컴포넌트들은 언제든지 Context값을 조회 가능하다.
+
+```
+import React , {useContext} from 'react';
+import {Context} from 'Context';
+const app = () => {
+    //구조화 해서 사용한다.
+    const {value} = useContext(Context);
+}
+```
