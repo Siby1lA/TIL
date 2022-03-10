@@ -661,3 +661,60 @@ const app = () => {
     const {value} = useContext(Context);
 }
 ```
+
+## 23. Immer 를 사용한 더 쉬운 불변성 관리
+
+리액트에서 배열이나 객체를 업데이트를 할 때 직접 수정하면 안되고 불변성을 지켜주면서 업데이트를 해야 한다.
+
+```
+const object = {
+  a: 1,
+  b: 2
+};
+object.b = 3;
+```
+
+이와 같이 직접 수정하면 안되고
+
+```
+const object = {
+  a: 1,
+  b: 2
+};
+const nextObject = {
+  ...object,
+  b: 3
+};
+```
+
+...연산자를 사용해 새로운 객체를 만들어야 한다.
+
+배열도 마찬가지다. push, splice등의 함수를 사용하거나 인덱스를 지정해 직접 수정하면 안되고 `concat`, `filter`, `map` 등의 함수를 사용해야 한다.
+
+이렇게 대부분의 경우 쉽게 해결 할 수 있지만 데이터 구조가 까다로워지면 불변성을 지켜가며 새 데이터를 생성하는 코드가 복잡해질 것이다.
+
+이 때`Immer`라는 라이브러리를 사용하면 간편히 구현할 수 있다.
+
+```
+npm i immer
+```
+
+로 설치하고
+
+```
+import produce from 'immer';
+```
+
+produce라는 이름으로 import한다.
+`produce`함수의 첫 번째 파라미터는 수정하고 싶은 상태, 두번 째 파라미터는 어떻게 업데이트할 시 정의하는 함수를 넣는다. 여기서 두번째 파라미터에 넣는 함수에서의 불변성은 신경쓰지 않아도 함수가 알아서 해준다.
+
+```
+const state = {
+  number: 1,
+  dontChangeMe: 2
+};
+
+const nextState = produce(state, draft => {
+  draft.number += 1;
+});
+```
