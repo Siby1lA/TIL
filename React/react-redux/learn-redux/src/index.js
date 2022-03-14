@@ -4,8 +4,8 @@ import App from "./App";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./modules";
-
-const store = createStore(rootReducer); // 스토어를 만듭니다.
+import { composeWithDevTools } from "redux-devtools-extension";
+const store = createStore(rootReducer, composeWithDevTools()); // 스토어를 만듭니다.
 
 ReactDOM.render(
   <Provider store={store}>
