@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import rootReducer from "./modules";
 import { composeWithDevTools } from "redux-devtools-extension";
 const store = createStore(rootReducer, composeWithDevTools()); // 스토어를 만듭니다.
-
+console.log(store.getState());
 ReactDOM.render(
   <Provider store={store}>
     <App />
