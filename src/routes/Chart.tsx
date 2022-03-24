@@ -38,9 +38,7 @@ function Chart() {
             },
           ]}
           options={{
-            theme: {
-              mode: "dark",
-            },
+            theme: { mode: "dark" },
             chart: {
               height: 300,
               width: 300,
@@ -54,18 +52,22 @@ function Chart() {
               curve: "smooth",
               width: 4,
             },
-            yaxis: {
-              show: false,
-            },
+            yaxis: { show: false },
             xaxis: {
-              axisBorder: {
-                show: false,
-              },
-              axisTicks: {
-                show: false,
-              },
-              labels: {
-                show: false,
+              axisBorder: { show: false },
+              axisTicks: { show: false },
+              labels: { show: false },
+              type: "datetime",
+              categories: data?.map((price) => price.time_close),
+            },
+            fill: {
+              type: "gradient",
+              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+            },
+            colors: ["#0fbcf9"],
+            tooltip: {
+              y: {
+                formatter: (value) => `${value.toFixed(2)}`,
               },
             },
           }}
