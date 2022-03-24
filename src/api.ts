@@ -1,5 +1,3 @@
-import { start } from "repl";
-
 const BASE_URL = `https://api.coinpaprika.com/v1`;
 
 export function fetchcoins() {
@@ -18,8 +16,8 @@ export function fetchCoinTickers(coinId: string) {
 
 export function fetchCoinHistory(coinId: string) {
   const endDate = Math.floor(Date.now() / 1000);
-  const StartDate = endDate - 60 * 60 * 24 * 7 * 2;
+  const startDate = endDate - 60 * 60 * 24 * 7 * 2;
   return fetch(
-    `${BASE_URL}/coins/${coinId}/ohlcv/historycal?start=${StartDate}&end=${endDate}`
+    `${BASE_URL}/coins/${coinId}/ohlcv/historical?start=${startDate}&end=${endDate}`
   ).then((response) => response.json());
 }
