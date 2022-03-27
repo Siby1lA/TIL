@@ -10,9 +10,14 @@ function ToDo({ text, category, id }: IToDo) {
     } = event;
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
-      const oldToDo = oldToDos[targetIndex];
-      const newToDo = { text, id, category: name };
-      return oldToDos;
+
+      const newToDo = { text, id, category: name as any };
+      const newToDos = [...oldToDos]; // create new array
+      return [
+        ...newToDos.slice(0, targetIndex),
+        newToDo,
+        ...newToDos.slice(targetIndex + 1),
+      ];
     });
   };
   return (
