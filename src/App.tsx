@@ -1,8 +1,10 @@
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
 import Board from "./Components/Board";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,11 +22,40 @@ const Boards = styled.div`
   grid-template-columns: repeat(3, 1fr);
 `;
 
+const TrashButtonContainer = styled.div<{ isDraggin: boolean }>`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: crimson;
+  color: white;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s ease-in-out;
+  transform: ${(props) => (props.isDraggin ? "scale(1.3)" : "none")};
+  /* &.dragging-over {
+    transform: scale(1.3);
+  } */
+`;
+
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = (info: DropResult) => {
-    const { destination, draggableId, source } = info;
+    const { destination, source } = info;
     if (!destination) return;
+    if (destination.droppableId === "trash") {
+      setToDos((allBoards) => {
+        const boardCopy = [...allBoards[source.droppableId]];
+        boardCopy.splice(source.index, 1);
+        return {
+          ...allBoards,
+          [source.droppableId]: boardCopy,
+        };
+      });
+    }
     if (destination?.droppableId === source.droppableId) {
       //same board movement
       setToDos((allBoards) => {
@@ -62,6 +93,19 @@ function App() {
             <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
           ))}
         </Boards>
+        <Droppable droppableId={"trash"}>
+          {(magic, snapshot) => (
+            <>
+              <TrashButtonContainer
+                ref={magic.innerRef}
+                {...magic.droppableProps}
+                isDraggin={snapshot.isDraggingOver}
+              >
+                <FontAwesomeIcon icon={faTrash} color={"white"} size={"lg"} />
+              </TrashButtonContainer>
+            </>
+          )}
+        </Droppable>
       </Wrapper>
     </DragDropContext>
   );

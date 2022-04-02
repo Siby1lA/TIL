@@ -1,5 +1,8 @@
 import { atom } from "recoil";
-
+import { recoilPersist } from "recoil-persist";
+const { persistAtom } = recoilPersist({
+  key: "something",
+});
 export interface ITodo {
   id: number;
   text: string;
@@ -16,4 +19,5 @@ export const toDoState = atom<IToDoState>({
     Doing: [],
     done: [],
   },
+  effects_UNSTABLE: [persistAtom],
 });
