@@ -97,11 +97,11 @@ function solution(arr) {
     let answer = [];
     sum = 0;
     min = Number.MAX_SAFE_INTEGER;
-    for (i = 0; i < arr.length; i++) {
-        if (arr[i] % 2) {
-            sum += arr[i];
-            if (arr[i] < min) {
-                min = arr[i];
+    for (let x of arr) { //for of문
+        if (x % 2) {
+            sum += x;
+            if (x < min) {
+                min = x;
             }
         }
     }
@@ -110,5 +110,39 @@ function solution(arr) {
     return answer;
 }
 let arr = [12, 77, 38, 41, 53, 92, 85];
+console.log(solution(arr));
+```
+
+# 10부제
+
+```
+function solution(day, arr) {
+    let answer = 0;
+    for(let x of arr){
+        if(x%10===day) answer++;
+    }
+    return answer;
+}
+arr = [25, 23, 11, 47, 53, 17, 33];
+console.log(solution(3, arr));
+```
+
+# 일곱 난쟁이
+
+```
+function solution(arr) {
+    let answer = arr; //Shallow Copy
+    let sum = arr.reduce((a, b) => a + b, 0);
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length + 1; j++) {
+        if (sum - (arr[i] + arr[j]) === 100) {
+            arr.splice(j, 1);
+            arr.splice(i, 1);
+        }
+        }
+    }
+    return answer;
+}
+arr = [20, 7, 23, 19, 10, 15, 25, 8, 13];
 console.log(solution(arr));
 ```
