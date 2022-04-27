@@ -146,3 +146,67 @@ function solution(arr) {
 arr = [20, 7, 23, 19, 10, 15, 25, 8, 13];
 console.log(solution(arr));
 ```
+
+# A를 #으로
+
+```
+function solution(s) {
+    let answer = "";
+    for (let x of s) {
+        if (x === "A") answer += "#";
+        else answer += x;
+    }
+    return answer;
+}
+let str = "BANANA";
+console.log(solution(str));
+```
+
+```
+function solution(s) {
+    let answer = s;
+    answer = answer.replace(/A/g, "#");
+    return answer;
+}
+let str = "BANANA";
+console.log(solution(str));
+```
+
+# 문자 찾기
+
+```
+function solution(s, t) {
+    let answer = 0;
+    for (let x of s) {
+        if (t === x) answer++;
+    }
+return answer;
+}
+let str = "COMPUTERPROGRAMMING";
+console.log(solution(str, "R"));
+```
+
+```
+function solution(s, t) {
+    let answer = s.split(t).length;
+    return answer - 1;
+}
+let str = "COMPUTERPROGRAMMING";
+console.log(solution(str, "R"));
+```
+
+# 대문자 찾기
+
+```
+function solution(s) {
+    let answer = 0;
+    for (let x of s) {
+        if (x === x.toUpperCase()) answer++;
+        //let num = x.charCodeAt(); 아스키코드
+        //if (num >= 65 && num <= 90) answer++;
+    }
+    return answer;
+}
+let str = "KoreaTimeGood";
+console.log(solution(str));
+```

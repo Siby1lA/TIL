@@ -5,23 +5,16 @@
   </head>
   <body>
     <script>
-      function solution(arr) {
-        let answer = arr; //Shallow Copy
-        let sum = arr.reduce((a, b) => a + b, 0);
-
-        for (let i = 0; i < arr.length; i++) {
-          for (let j = i + 1; j < arr.length + 1; j++) {
-            if (sum - (arr[i] + arr[j]) === 100) {
-              arr.splice(j, 1);
-              arr.splice(i, 1);
-            }
-          }
+      function solution(s) {
+        let answer = 0;
+        for (let x of s) {
+          let num = x.charCodeAt();
+          if (num >= 65 && num <= 90) answer++;
         }
-
         return answer;
       }
-      arr = [20, 7, 23, 19, 10, 15, 25, 8, 13];
-      console.log(solution(arr));
+      let str = "KoreaTimeGood";
+      console.log(solution(str));
     </script>
   </body>
 </html>
