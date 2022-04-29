@@ -3,18 +3,21 @@
     <meta charset="UTF-8" />
     <title>출력결과</title>
   </head>
-  <body>
+  <bodgy>
     <script>
-      function solution(s) {
-        let answer = 0;
-        for (let x of s) {
-          let num = x.charCodeAt();
-          if (num >= 65 && num <= 90) answer++;
+      function solution(arr) {
+        let answer = 1,
+          max = arr[0];
+        for (let i = 1; i < arr.length; i++) {
+          if (max < arr[i]) {
+            answer++;
+            max = arr[i];
+          }
         }
         return answer;
       }
-      let str = "KoreaTimeGood";
-      console.log(solution(str));
+      let arr = [130, 135, 148, 140, 145, 150, 150, 153];
+      console.log(solution(arr));
     </script>
-  </body>
+  </bodgy>
 </html>
