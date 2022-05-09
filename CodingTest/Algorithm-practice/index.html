@@ -6,16 +6,12 @@
   <bodgy>
     <script>
       function solution(s) {
-        let answer = "YES";
-        s = s.toLowerCase();
-        let len = s.length;
-        for (let i = 0; i < Math.floor(len / 2); i++) {
-          if (s[i] != s[len - i - 1]) return "NO";
-        }
+        let answer;
+        answer = s.replace(/[^0-9]/g, "").replace(/(^0+)/, "");
         return answer;
       }
 
-      let str = "goooG";
+      let str = "g0en2T0s8eSoft";
       console.log(solution(str));
     </script>
   </bodgy>
