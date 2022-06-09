@@ -17,6 +17,8 @@ const connection = mysql.createConnection({
   port: conf.port,
   database: conf.database,
 });
+
+// 데이터 불러오기
 connection.connect();
 app.get("/api/customers", (req, res) => {
   connection.query("SELECT * FROM CUSTOMER", (err, rows, fields) => {
@@ -24,7 +26,7 @@ app.get("/api/customers", (req, res) => {
   });
 });
 
-//dbdata 삽입
+// 데이터 삽입
 app.post("/api/customers", (req, res) => {
   let sql = "INSERT INTO CUSTOMER VALUES (null, ?, ?, ?, ?)";
   let name = req.body.name;
@@ -38,6 +40,7 @@ app.post("/api/customers", (req, res) => {
   });
 });
 
+// 데이터 삭제
 app.delete("/api/customer/:id", (req, res) => {
   let sql = "DELETE FROM CUSTOMER WHERE id = ?";
   let params = [req.params.id];
