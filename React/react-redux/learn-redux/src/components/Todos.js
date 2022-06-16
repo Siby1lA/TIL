@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// 컴포넌트 최적화를 위하여 React.memo를 사용합니다
 const TodoItem = React.memo(function TodoItem({ todo, onToggle }) {
   return (
     <li
@@ -22,9 +21,7 @@ const TodoList = React.memo(function TodoList({ todos, onToggle }) {
     </ul>
   );
 });
-
 function Todos({ todos, onCreate, onToggle }) {
-  // 리덕스를 사용한다고 해서 모든 상태를 리덕스에서 관리해야하는 것은 아닙니다.
   const [text, setText] = useState("");
   const onChange = (e) => setText(e.target.value);
   const onSubmit = (e) => {
@@ -32,7 +29,6 @@ function Todos({ todos, onCreate, onToggle }) {
     onCreate(text);
     setText(""); // 인풋 초기화
   };
-
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -47,5 +43,4 @@ function Todos({ todos, onCreate, onToggle }) {
     </div>
   );
 }
-
 export default Todos;
