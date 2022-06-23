@@ -243,3 +243,59 @@ sum(10, 20); // 30
 sum(10, 20, 30); // error, too many parameters
 sum(10); // 10
 ```
+
+## 인터페이스
+
+인터페이스는 상호 간 정의한 약속 혹은 규칙을 의미합니다.
+타입스크립트에서의 인터페이스는 보통 다음과 같은 범주에 대해 약속을 정의합니다.
+
+- 객체의 속성과 속성의 타입
+- 함수의 파라미터
+- 함수의 반환 타입
+- 배열과 객체를 접근하는 방식
+- 클래스
+
+### 인터페이스 맛보기
+
+```
+let person = { name: 'Capt', age: 28 };
+
+function logAge(obj: { age: number }) {
+  console.log(obj.age); // 28
+}
+logAge(person); // 28
+```
+
+위 `logAge()` 함수에서 받는 인자는 age를 속성으로 갖는 객체입니다.
+이렇게 인자를 받을 때 타입 뿐만 아니라 객체의 속성의 타입까지 정의할 수 있습니다.
+
+여기에 인터페이스를 적용하면 속성 갯수와 인자로 받는 객체의 속성 갯수를 일치시키지 않아도 됩니다.
+(단 타입의 조건만 만족한다면)
+
+```
+interface personAge {
+  age: number;
+}
+
+function logAge(obj: personAge) {
+  console.log(obj.age);
+}
+let person = { name: 'Capt', age: 28 };
+logAge(person);
+```
+
+또한 `logAge()` 의 인자는 `personAge` 라는 타입을 가져야 한다고 더욱 명시적으로 바뀌었습니다.
+
+### 옵션 속성
+
+인터페이스를 사용할 때 `옵션 속성` 을 사용하면 인터페이스에 정의되어 있는 속성을 모두 다 꼭 사용하지 않아도 됩니다.
+
+```
+interface game {
+	zelda?: string
+}
+```
+
+이처럼 속성의 끝에 `?` 를 붙여 사용합니다.
+
+### 읽기 전용 속성
