@@ -47,6 +47,8 @@ userSchema.pre("save", function (next) {
   }
 });
 userSchema.methods.comparePassword = function (plainPassword, cb) {
+  // plainPassword : 123456 / 암호화된 비번 : #!@#1241@$1~!asd
+  //plainPassword 암호화 해서 비교한다
   bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
     if (err) return cb(err);
     cb(null, isMatch);
@@ -54,23 +56,26 @@ userSchema.methods.comparePassword = function (plainPassword, cb) {
 };
 
 userSchema.methods.generateToken = function (cb) {
-  let user = this;
-  //jsonwebktoken을 이용해 token 생성하기
-  let token = jwt.sign(user._id.toHexString(), "secretToken");
+  var user = this;
+  //jsonwebToken을 이용하여 토큰 생성 user._id는 mongo id
+  // user._id + 'secretToken' = token
+  //jwt.sign(payload, secretKey)이 기대값
+  //user_.id는 문자열이 아니기 때문에 .toHexString으로 24바이트 16진수 문자열로 바꿔줌?
+  var token = jwt.sign(user._id.toHexString(), "secretToken");
   user.token = token;
   user.save(function (err, user) {
     if (err) return cb(err);
-    cb(user);
+    cb(null, user);
   });
 };
 
 userSchema.statics.findByToken = function (token, cb) {
-  let user = this;
+  var user = this;
 
-  //token decoding
+  //token decode
   jwt.verify(token, "secretToken", function (err, decoded) {
-    // 유저 아이디를 이용해 유저를 찾고
-    // client에서 가져온 token과 db 보관된 토큰이 일치하는지 확인
+    //유저 아이디를 이용해서 유저를 찾은 다음에
+    //클라이언트에서 가져온 토큰과 디비에 보관된 토큰이 일치하는지 확인
     user.findOne({ _id: decoded, token: token }, function (err, user) {
       if (err) return cb(err);
       cb(null, user);
