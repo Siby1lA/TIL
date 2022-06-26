@@ -5,8 +5,8 @@ import { loginUser } from "../../../redux/action/user";
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const onEmailHandler = (event) => {
     setEmail(event.target.value);
   };
@@ -17,12 +17,12 @@ function LoginPage() {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     let body = {
-      email: Email,
-      password: Password,
+      email: email,
+      password: password,
     };
 
     dispatch(loginUser(body)).then((response) => {
-      if (response.payload.loginSuccess) {
+      if (response.payload.success) {
         navigate("/");
       } else {
         alert("Error");
@@ -44,13 +44,15 @@ function LoginPage() {
         style={{ display: "flex", flexDirection: "column" }}
       >
         <label>Email</label>
-        <input type="email" value={Email} onChange={onEmailHandler}></input>
+        <input type="email" value={email} onChange={onEmailHandler}></input>
+
         <label>Password</label>
         <input
           type="password"
-          value={Password}
+          value={password}
           onChange={onPasswordHandler}
         ></input>
+
         <br />
         <button>Login</button>
       </form>

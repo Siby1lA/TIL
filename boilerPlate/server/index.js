@@ -51,7 +51,7 @@ app.post("/api/users/login", (req, res) => {
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch)
         return res.json({
-          loginSuccess: false,
+          success: false,
           message: "비밀번호가 틀렸습니다.",
         });
       //3. 2조건 충족 시, 토큰 생성
@@ -62,7 +62,7 @@ app.post("/api/users/login", (req, res) => {
         res
           .cookie("x_auth", user.token)
           .status(200)
-          .json({ loginSuccess: true, userId: user._id });
+          .json({ success: true, userId: user._id });
       });
     });
   });
