@@ -7,14 +7,14 @@ function LoginPage() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const onEmailHandler = (event) => {
+  const onEmail = (event) => {
     setEmail(event.target.value);
   };
 
-  const onPasswordHandler = (event) => {
+  const onPassword = (event) => {
     setPassword(event.target.value);
   };
-  const onSubmitHandler = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     let body = {
       email: email,
@@ -40,18 +40,14 @@ function LoginPage() {
       }}
     >
       <form
-        onSubmit={onSubmitHandler}
+        onSubmit={onSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
         <label>Email</label>
-        <input type="email" value={email} onChange={onEmailHandler}></input>
+        <input type="email" value={email} onChange={onEmail}></input>
 
         <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={onPasswordHandler}
-        ></input>
+        <input type="password" value={password} onChange={onPassword}></input>
 
         <br />
         <button>Login</button>
