@@ -36,7 +36,7 @@ function RegisterPage() {
 
       //db에 저장
       set(ref(dbService, `users/${createdUser.user.uid}`), {
-        name: createdUser.user.displayName,
+        nickname: createdUser.user.displayName,
         image: createdUser.user.photoURL,
       });
 
