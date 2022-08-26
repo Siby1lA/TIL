@@ -1,19 +1,14 @@
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { authService } from "../../firebase";
-import { setUser } from "../../redux/actions/user_action";
-
+import SidePanel from "./SidePanel/SidePanel";
+import MainPanel from "./MainPanel/MainPanel";
 function ChatPage() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const onLogOutClick = () => {
-    dispatch(setUser(null));
-    authService.signOut();
-  };
   return (
-    <div>
-      <div>채팅페이지</div>
-      <div onClick={onLogOutClick}>로그아웃 </div>
+    <div style={{ display: "flex" }}>
+      <div style={{ width: "300px" }}>
+        <SidePanel />
+      </div>
+      <div style={{ width: "100%" }}>
+        <MainPanel />
+      </div>
     </div>
   );
 }

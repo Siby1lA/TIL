@@ -6,7 +6,7 @@ import ChatPage from "./components/ChatPage/ChatPage";
 import LoginPage from "./components/LoginPage/LoginPage";
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import { authService } from "./firebase";
-import { setUser } from "./redux/actions/user_action";
+import { setUser, clearUser } from "./redux/actions/user_action";
 
 function App() {
   const navigate = useNavigate();
@@ -15,17 +15,15 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        //로그인됨
         navigate("/");
         dispatch(setUser(user));
       } else {
-        //로그인안됨
         navigate("/login");
+        dispatch(clearUser());
       }
     });
   }, []);
   if (isLoading) {
-    console.log(isLoading);
     return <div>...로딩중</div>;
   } else {
     return (
