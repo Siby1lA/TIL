@@ -32,7 +32,6 @@ function RegisterPage() {
           createdUser.user.email
         )}?d=identicon`,
       });
-      console.log(createdUser);
 
       //db에 저장
       set(ref(dbService, `users/${createdUser.user.uid}`), {
