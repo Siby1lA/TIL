@@ -3,7 +3,11 @@ import { Col, Form, ProgressBar, Row } from "react-bootstrap";
 import { dbService, storageService } from "../../../firebase";
 import { ref, set, child, push } from "firebase/database";
 import { useSelector } from "react-redux";
-import { uploadBytesResumable, ref as strRef } from "firebase/storage";
+import {
+  uploadBytesResumable,
+  ref as strRef,
+  getDownloadURL,
+} from "firebase/storage";
 function MessageForm() {
   const inputOpenImageRef = useRef();
   const [content, setContent] = useState("");
@@ -100,8 +104,15 @@ function MessageForm() {
           }
         },
         () => {
-          // 스토리지에 저장이 된 후 파일 메시지 전송
+          // 스토리지에 저장이 된 후 파일 메시지 전송 (DB에 저장)
           // 저장된 파일을 다운로드 받을 수 있게 URL로 가져오기
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            set(
+              push(child(messagesRef, chatRoom.id)),
+              createMessage(downloadURL)
+            );
+            setLoading(false);
+          });
         }
       );
     } catch (error) {
