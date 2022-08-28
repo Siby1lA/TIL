@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Col, Form, ProgressBar, Row } from "react-bootstrap";
-import { storageService, dbService } from "../../../firebase";
-import { ref, set, remove, push, child } from "firebase/database";
+import { dbService, storageService } from "../../../firebase";
+import { ref, set, child, push } from "firebase/database";
 import { useSelector } from "react-redux";
+import { uploadBytesResumable, ref as strRef } from "firebase/storage";
 function MessageForm() {
+  const inputOpenImageRef = useRef();
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [percentage, setPercentage] = useState(0);
   const messagesRef = ref(dbService, "message");
   const user = useSelector((state) => state.user.currentUser);
   const chatRoom = useSelector((state) => state.chatRoom.currentChatRoom);
@@ -52,6 +55,59 @@ function MessageForm() {
     }
     return message;
   };
+  const handleOpenImageRef = () => {
+    inputOpenImageRef.current.click();
+  };
+  const handleUploadImage = async (e) => {
+    const file = e.target.files[0];
+    const filePath = `/message/public/${file.name}`;
+    const metadata = { contentType: file.type };
+    try {
+      // 파일을 스토리지에 저장하기
+      const storageRef = strRef(storageService, filePath);
+      const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setPercentage(Math.floor(progress));
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          // A full list of error codes is available at
+          // https://firebase.google.com/docs/storage/web/handle-errors
+          switch (error.code) {
+            case "storage/unauthorized":
+              // User doesn't have permission to access the object
+              break;
+            case "storage/canceled":
+              // User canceled the upload
+              break;
+            // ...
+            case "storage/unknown":
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        },
+        () => {
+          // 스토리지에 저장이 된 후 파일 메시지 전송
+          // 저장된 파일을 다운로드 받을 수 있게 URL로 가져오기
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <Form onSubmit={handleSubmit}>
@@ -64,7 +120,14 @@ function MessageForm() {
           />
         </Form.Group>
       </Form>
-      <ProgressBar variant="warning" label="60%" now={60} />
+      {!(percentage === 0 || percentage === 100) && (
+        <ProgressBar
+          variant="warning"
+          label={`${percentage}%`}
+          now={percentage}
+        />
+      )}
+
       <div>
         {errors &&
           errors.map((errorMsg) => (
@@ -84,11 +147,22 @@ function MessageForm() {
           </button>
         </Col>
         <Col>
-          <button className="message-form-button" style={{ width: "100%" }}>
+          <button
+            onClick={handleOpenImageRef}
+            className="message-form-button"
+            style={{ width: "100%" }}
+          >
             이미지
           </button>
         </Col>
       </Row>
+      <input
+        style={{ display: "none" }}
+        type="file"
+        ref={inputOpenImageRef}
+        accept="image/jpeg, image/png"
+        onChange={handleUploadImage}
+      />
     </div>
   );
 }
