@@ -6,11 +6,16 @@ import {
   InputGroup,
   Row,
 } from "react-bootstrap";
-import { FaLock } from "react-icons/fa";
+import { FaLock, FaLockOpen } from "react-icons/fa";
 import { MdFavorite } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
 import Image from "react-bootstrap/Image";
+import { useSelector } from "react-redux";
 function MessageHeader({ handleSearchChange }) {
+  const chatRoom = useSelector((state) => state.chatRoom.currentChatRoom);
+  const isPrivateChatRoom = useSelector(
+    (state) => state.chatRoom.isPrivateChatRoom
+  );
   return (
     <div
       style={{
@@ -26,7 +31,8 @@ function MessageHeader({ handleSearchChange }) {
         <Row>
           <Col>
             <h5>
-              <FaLock /> 채팅방 이름 <MdFavorite />
+              {isPrivateChatRoom ? <FaLock /> : <FaLockOpen />}
+              {chatRoom && chatRoom?.chatRoomName} <MdFavorite />
             </h5>
           </Col>
           <Col>

@@ -4,7 +4,10 @@ import { Button, Modal, Form } from "react-bootstrap";
 import { FaRegSmileWink, FaPlus } from "react-icons/fa";
 import { connect } from "react-redux";
 import { dbService } from "../../../firebase";
-import { setCurrentChatRoom } from "../../../redux/actions/chatRoom_action";
+import {
+  setCurrentChatRoom,
+  setPrivateChatRoom,
+} from "../../../redux/actions/chatRoom_action";
 export class ChatRooms extends Component {
   state = {
     show: false,
@@ -77,6 +80,7 @@ export class ChatRooms extends Component {
   };
   changeChatRoom = (room) => {
     this.props.dispatch(setCurrentChatRoom(room));
+    this.props.dispatch(setPrivateChatRoom(false));
     this.setState({ activeChatRoomId: room.id });
   };
   render() {
