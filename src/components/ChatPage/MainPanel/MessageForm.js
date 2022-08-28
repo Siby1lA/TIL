@@ -66,6 +66,7 @@ function MessageForm() {
     const file = e.target.files[0];
     const filePath = `/message/public/${file.name}`;
     const metadata = { contentType: file.type };
+    setLoading(true);
     try {
       // 파일을 스토리지에 저장하기
       const storageRef = strRef(storageService, filePath);
@@ -88,6 +89,7 @@ function MessageForm() {
           }
         },
         (error) => {
+          setLoading(false);
           // A full list of error codes is available at
           // https://firebase.google.com/docs/storage/web/handle-errors
           switch (error.code) {
@@ -150,6 +152,7 @@ function MessageForm() {
       <Row>
         <Col>
           <button
+            disabled={loading ? true : false}
             onClick={handleSubmit}
             className="message-form-button"
             style={{ width: "100%" }}

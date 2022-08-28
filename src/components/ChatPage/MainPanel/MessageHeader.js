@@ -10,7 +10,7 @@ import { FaLock } from "react-icons/fa";
 import { MdFavorite } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
 import Image from "react-bootstrap/Image";
-function MessageHeader() {
+function MessageHeader({ handleSearchChange }) {
   return (
     <div
       style={{
@@ -35,6 +35,7 @@ function MessageHeader() {
                 <AiOutlineSearch />
               </InputGroup.Text>
               <Form.Control
+                onChange={handleSearchChange}
                 placeholder="메세지 검색"
                 aria-label="search"
                 aria-describedby="basic-addon1"

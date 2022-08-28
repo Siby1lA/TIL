@@ -10,11 +10,15 @@ export class MainPanel extends Component {
     messages: [],
     messagesLoading: true,
     messagesRef: ref(dbService, "message"),
+    searchTerm: "",
+    searchResults: [],
+    searchLoading: false,
   };
   componentDidMount() {
     const { chatRoom } = this.props;
     if (chatRoom) this.addMessagesListener(chatRoom.id);
   }
+
   addMessagesListener = (chatRoomId) => {
     let messagesArray = [];
     let { messagesRef } = this.state;
@@ -27,6 +31,29 @@ export class MainPanel extends Component {
       // this.userPostsCount(messagesArray);
     });
   };
+  handleSearchChange = (e) => {
+    this.setState(
+      {
+        searchTerm: e.target.value,
+        searchLoading: true,
+      },
+      () => this.handleSearchMessages()
+    );
+  };
+  handleSearchMessages = () => {
+    const chatRoomMessages = [...this.state.messages];
+    const regex = new RegExp(this.state.searchTerm, "gi");
+    const searchResults = chatRoomMessages.reduce((acc, message) => {
+      if (
+        (message.content && message.content.match(regex)) ||
+        message.user.nickname.match(regex)
+      ) {
+        acc.push(message);
+      }
+      return acc;
+    }, []);
+    this.setState({ searchResults });
+  };
   render() {
     return (
       <div
@@ -34,7 +61,7 @@ export class MainPanel extends Component {
           padding: "2rem 2rem 0 2rem",
         }}
       >
-        <MessageHeader />
+        <MessageHeader handleSearchChange={this.handleSearchChange} />
         <div
           style={{
             width: "100%",
@@ -46,9 +73,13 @@ export class MainPanel extends Component {
             overflowY: "auto",
           }}
         >
-          {this.state.messages?.map((msg, idx) => (
-            <Message key={idx} message={msg} user={this.props.user} />
-          ))}
+          {this.state.searchTerm
+            ? this.state.searchResults?.map((msg, idx) => (
+                <Message key={idx} message={msg} user={this.props.user} />
+              ))
+            : this.state.messages?.map((msg, idx) => (
+                <Message key={idx} message={msg} user={this.props.user} />
+              ))}
         </div>
         <MessageForm />
       </div>
