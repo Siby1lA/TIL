@@ -5,6 +5,7 @@ import Message from "./Message";
 import { connect } from "react-redux";
 import { dbService } from "../../../firebase";
 import { child, onChildAdded, ref } from "firebase/database";
+import { setUserPosts } from "../../../redux/actions/user_action";
 export class MainPanel extends Component {
   state = {
     messages: [],
@@ -28,7 +29,7 @@ export class MainPanel extends Component {
         messages: messagesArray,
         messagesLoading: false,
       });
-      // this.userPostsCount(messagesArray);
+      this.userPostsCount(messagesArray);
     });
   };
   handleSearchChange = (e) => {
@@ -53,6 +54,20 @@ export class MainPanel extends Component {
       return acc;
     }, []);
     this.setState({ searchResults });
+  };
+  userPostsCount = (messages) => {
+    let userPosts = messages.reduce((acc, message) => {
+      if (message.user.nickname in acc) {
+        acc[message.user.nickname].count += 1;
+      } else {
+        acc[message.user.nickname] = {
+          image: message.user.image,
+          count: 1,
+        };
+      }
+      return acc;
+    }, {});
+    this.props.dispatch(setUserPosts(userPosts));
   };
   render() {
     return (

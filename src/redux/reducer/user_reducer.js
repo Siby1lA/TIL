@@ -1,4 +1,9 @@
-import { CLEAR_USER, SET_PHOTO_URL, SET_USER } from "../actions/types";
+import {
+  CLEAR_USER,
+  SET_PHOTO_URL,
+  SET_URSER_POSTS,
+  SET_USER,
+} from "../actions/types";
 
 const init = {
   currentUser: null,
@@ -23,6 +28,11 @@ export default function (state = init, action) {
         ...state,
         currentUser: { ...state.currentUser, photoURL: action.payload },
         isLoading: false,
+      };
+    case SET_URSER_POSTS:
+      return {
+        ...state,
+        userPosts: action.payload,
       };
     default:
       return state;

@@ -42,13 +42,6 @@ export class Favorited extends Component {
     const { userRef } = this.state;
 
     onChildAdded(child(userRef, `${userId}/favorited`), (DataSnapshot) => {
-      // const favoritedChatRoom = { id: DataSnapshot.key, ...DataSnapshot.val() };
-      // this.setState({
-      //   favoritedChatRooms: [
-      //     ...this.state.favoritedChatRooms,
-      //     favoritedChatRoom,
-      //   ],
-      // });
       let Array = [];
       onChildAdded(child(userRef, `${userId}/favorited`), (DataSnapshot) => {
         Array.push({ id: DataSnapshot.key, ...DataSnapshot.val() });
