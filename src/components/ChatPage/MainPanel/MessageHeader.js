@@ -7,15 +7,53 @@ import {
   Row,
 } from "react-bootstrap";
 import { FaLock, FaLockOpen } from "react-icons/fa";
-import { MdFavorite } from "react-icons/md";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
 import Image from "react-bootstrap/Image";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { dbService } from "../../../firebase";
+import { child, onValue, ref, remove, update } from "firebase/database";
 function MessageHeader({ handleSearchChange }) {
+  const [isFavorited, setIsFavorited] = useState(false);
   const chatRoom = useSelector((state) => state.chatRoom.currentChatRoom);
   const isPrivateChatRoom = useSelector(
     (state) => state.chatRoom.isPrivateChatRoom
   );
+  const user = useSelector((state) => state.user.currentUser);
+  const usersRef = ref(dbService, "users");
+  useEffect(() => {
+    if (chatRoom && user) {
+      addFavoriteListener(chatRoom.id, user.uid);
+    }
+  }, []);
+  const addFavoriteListener = (chatRoomId, userId) => {
+    onValue(child(usersRef, `${userId}/favorited`), (data) => {
+      if (data.val() !== null) {
+        const chatRoomIds = Object.keys(data.val());
+        const isAlreadyFavorited = chatRoomIds.includes(chatRoomId);
+        setIsFavorited(isAlreadyFavorited);
+      }
+    });
+  };
+  const handleFavorite = () => {
+    if (isFavorited) {
+      setIsFavorited((prev) => !prev);
+      remove(child(usersRef, `${user.uid}/favorited/${chatRoom.id}`));
+    } else {
+      setIsFavorited((prev) => !prev);
+      update(child(usersRef, `${user.uid}/favorited`), {
+        [chatRoom.id]: {
+          chatRoomName: chatRoom.chatRoomName,
+          description: chatRoom.description,
+          createdBy: {
+            nickname: chatRoom.createBy.nickname,
+            image: chatRoom.createBy.image,
+          },
+        },
+      });
+    }
+  };
   return (
     <div
       style={{
@@ -32,7 +70,12 @@ function MessageHeader({ handleSearchChange }) {
           <Col>
             <h5>
               {isPrivateChatRoom ? <FaLock /> : <FaLockOpen />}
-              {chatRoom && chatRoom?.chatRoomName} <MdFavorite />
+              {chatRoom && chatRoom?.chatRoomName}
+              {!isPrivateChatRoom && (
+                <span style={{ cursor: "pointer" }} onClick={handleFavorite}>
+                  {isFavorited ? <MdFavorite /> : <MdFavoriteBorder />}
+                </span>
+              )}
             </h5>
           </Col>
           <Col>

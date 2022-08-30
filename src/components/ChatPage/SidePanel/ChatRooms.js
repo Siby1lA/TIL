@@ -33,9 +33,6 @@ export class ChatRooms extends Component {
   }
   componentWillUnmount() {
     off(this.state.chatRoomsRef);
-    this.state.chatRooms.forEach((chatRoom) => {
-      off(this.state.messagesRef.child(chatRoom.id));
-    });
   }
   AddChatRoomsListeners = () => {
     let chatRoomsArray = [];
@@ -96,7 +93,7 @@ export class ChatRooms extends Component {
       if (chatRoomIds !== currentChatRoomId) {
         //현재까지 유저가 확인한 총 메시지 개수
         let lastTotal = notifications[index].lastKnownTotal;
-        console.log(1);
+
         //count (알림으로 보여줄 숫자)를 구하기
         //현재 총 메시지 개수 - 이전에 확인한 총 메시지 개수 > 0
         //현재 총 메시지 개수가 10개이고 이전에 확인한 메시지가 8개 였다면 2개를 알림으로 보여줘야함.
@@ -166,7 +163,6 @@ export class ChatRooms extends Component {
   getNotificationCount = (room) => {
     //해당 채팅방의 count수를 구하는 중입니다.
     let count = 0;
-
     this.state.notifications.forEach((notification) => {
       if (notification.id === room.id) {
         count = notification.count;
@@ -186,7 +182,7 @@ export class ChatRooms extends Component {
           }}
         >
           <FaRegSmileWink style={{ marginRight: 3 }} />
-          채팅방 (1)
+          채팅방 ({this.state.chatRooms.length})
           <FaPlus
             onClick={this.handleShow}
             style={{ position: "absolute", right: 0, cursor: "pointer" }}
