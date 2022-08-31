@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Col, Form, ProgressBar, Row } from "react-bootstrap";
 import { dbService, storageService } from "../../../firebase";
-import { ref, set, child, push } from "firebase/database";
+import { ref, set, child, push, remove } from "firebase/database";
 import { useSelector } from "react-redux";
 import {
   uploadBytesResumable,
@@ -35,6 +35,7 @@ function MessageForm() {
       await set(push(child(messagesRef, chatRoom.id)), createMessage());
       // typingRef.child(chatRoom.id).child(user.uid).remove();
       // await remove(child(typingRef, `${chatRoom.id}/${user.uid}`));
+      remove(ref(dbService, `typing/${chatRoom.id}/${user.uid}`));
       setLoading(false);
       setContent("");
       setErrors([]);
@@ -128,11 +129,24 @@ function MessageForm() {
       console.log(error);
     }
   };
+  const handleKeyDown = (event) => {
+    if (event.ctrlKey && event.keyCode === 13) {
+      handleSubmit();
+    }
+    if (content) {
+      set(ref(dbService, `typing/${chatRoom.id}/${user.uid}`), {
+        userUid: user.displayName,
+      });
+    } else {
+      remove(ref(dbService, `typing/${chatRoom.id}/${user.uid}`));
+    }
+  };
   return (
     <div>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
           <Form.Control
+            onKeyDown={handleKeyDown}
             value={content}
             onChange={handleChange}
             as="textarea"

@@ -4,7 +4,13 @@ import MessageForm from "./MessageForm";
 import Message from "./Message";
 import { connect } from "react-redux";
 import { dbService } from "../../../firebase";
-import { child, onChildAdded, ref } from "firebase/database";
+import {
+  child,
+  off,
+  onChildAdded,
+  onChildRemoved,
+  ref,
+} from "firebase/database";
 import { setUserPosts } from "../../../redux/actions/user_action";
 export class MainPanel extends Component {
   state = {
@@ -14,11 +20,76 @@ export class MainPanel extends Component {
     searchTerm: "",
     searchResults: [],
     searchLoading: false,
+    typingRef: ref(dbService, "typing"),
+    typingUsers: [],
+    listenerLists: [],
   };
   componentDidMount() {
     const { chatRoom } = this.props;
-    if (chatRoom) this.addMessagesListener(chatRoom.id);
+    if (chatRoom) {
+      this.addMessagesListener(chatRoom.id);
+      this.addTypingListeners(chatRoom.id);
+    }
   }
+  componentWillUnmount() {
+    off(this.state.messagesRef);
+    this.removeListeners(this.state.listenerLists);
+  }
+  removeListeners = (listeners) => {
+    listeners.forEach((listner) => {
+      off(ref(dbService, `messages/${listner.id}`), listner.event);
+    });
+  };
+  addTypingListeners = (chatRoomId) => {
+    let typingUsers = [];
+    //typing이 새로 들어올 때
+    let { typingRef } = this.state;
+
+    onChildAdded(child(typingRef, chatRoomId), (DataSnapshot) => {
+      //자기 자신을 제외한 타이핑 정보 가져오기
+      if (DataSnapshot.key !== this.props.user.uid) {
+        typingUsers = typingUsers.concat({
+          id: DataSnapshot.key,
+          nickname: DataSnapshot.val(),
+        });
+        this.setState({ typingUsers });
+      }
+    });
+
+    //listenersList state에 등록된 리스너를 넣어주기
+    this.addToListenerLists(chatRoomId, this.state.typingRef, "child_added");
+
+    //typing을 지워줄 때
+    onChildRemoved(child(typingRef, chatRoomId), (DataSnapshot) => {
+      const index = typingUsers.findIndex(
+        (user) => user.id === DataSnapshot.key
+      );
+      if (index !== -1) {
+        typingUsers = typingUsers.filter(
+          (user) => user.id !== DataSnapshot.key
+        );
+        this.setState({ typingUsers });
+      }
+    });
+
+    //listenersList state에 등록된 리스너를 넣어주기
+    this.addToListenerLists(chatRoomId, this.state.typingRef, "child_removed");
+  };
+  addToListenerLists = (id, ref, event) => {
+    //이미 등록된 리스너인지 확인
+    const index = this.state.listenerLists.findIndex((listener) => {
+      return (
+        listener.id === id && listener.ref === ref && listener.event === event
+      );
+    });
+
+    if (index === -1) {
+      const newListener = { id, ref, event };
+      this.setState({
+        listenerLists: this.state.listenerLists.concat(newListener),
+      });
+    }
+  };
 
   addMessagesListener = (chatRoomId) => {
     let messagesArray = [];
@@ -69,6 +140,14 @@ export class MainPanel extends Component {
     }, {});
     this.props.dispatch(setUserPosts(userPosts));
   };
+  renderTypingUsers = (typingUsers) => {
+    return (
+      typingUsers.length > 0 &&
+      typingUsers.map((user) => (
+        <span>{user?.nickname?.userUid}님이 채팅을 입력하고 있습니다...</span>
+      ))
+    );
+  };
   render() {
     return (
       <div
@@ -95,6 +174,7 @@ export class MainPanel extends Component {
             : this.state.messages?.map((msg, idx) => (
                 <Message key={idx} message={msg} user={this.props.user} />
               ))}
+          {this.renderTypingUsers(this.state.typingUsers)}
         </div>
         <MessageForm />
       </div>
