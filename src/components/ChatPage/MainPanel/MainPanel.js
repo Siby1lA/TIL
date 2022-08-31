@@ -13,6 +13,7 @@ import {
 } from "firebase/database";
 import { setUserPosts } from "../../../redux/actions/user_action";
 export class MainPanel extends Component {
+  messageEndRef = React.createRef();
   state = {
     messages: [],
     messagesLoading: true,
@@ -34,6 +35,11 @@ export class MainPanel extends Component {
   componentWillUnmount() {
     off(this.state.messagesRef);
     this.removeListeners(this.state.listenerLists);
+  }
+  componentDidUpdate() {
+    if (this.messageEndRef) {
+      this.messageEndRef.scrollIntoView({ beforeAll: "smooth" });
+    }
   }
   removeListeners = (listeners) => {
     listeners.forEach((listner) => {
@@ -175,6 +181,7 @@ export class MainPanel extends Component {
                 <Message key={idx} message={msg} user={this.props.user} />
               ))}
           {this.renderTypingUsers(this.state.typingUsers)}
+          <div ref={(node) => (this.messageEndRef = node)} />
         </div>
         <MessageForm />
       </div>
