@@ -12,6 +12,7 @@ import {
   ref,
 } from "firebase/database";
 import { setUserPosts } from "../../../redux/actions/user_action";
+import Skeleton from "../../../commons/components/Skeleton";
 export class MainPanel extends Component {
   messageEndRef = React.createRef();
   state = {
@@ -154,6 +155,7 @@ export class MainPanel extends Component {
       ))
     );
   };
+
   render() {
     return (
       <div
@@ -173,6 +175,13 @@ export class MainPanel extends Component {
             overflowY: "auto",
           }}
         >
+          {this.state.messagesLoading && (
+            <>
+              {[...new Array(10)].map((index) => (
+                <Skeleton key={index} />
+              ))}
+            </>
+          )}
           {this.state.searchTerm
             ? this.state.searchResults?.map((msg, idx) => (
                 <Message key={idx} message={msg} user={this.props.user} />
