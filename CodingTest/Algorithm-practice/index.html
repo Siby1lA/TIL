@@ -5,18 +5,17 @@
   </head>
   <body>
     <script>
-      function solution(str) {
+      function solution(n, k) {
         let answer;
-        let stack = [];
-        for (let x of str) {
-          if (x !== ")") stack.push(x);
-          else while (stack.pop() !== "(");
+        let queue = Array.from({ length: n }, (value, index) => index + 1);
+        while (queue.length) {
+          for (let i = 0; i < k - 1; i++) queue.push(queue.shift());
+          queue.shift();
+          if (queue.length === 1) answer = queue.shift();
         }
-        answer = stack.join("");
         return answer;
       }
-      let str = "(A(BC)D)EF(G(H)(IJ)K)LM(N)";
-      console.log(solution(str));
+      console.log(solution(8, 3));
     </script>
   </body>
 </html>
