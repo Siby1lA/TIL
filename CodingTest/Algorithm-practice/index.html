@@ -5,17 +5,18 @@
   </head>
   <body>
     <script>
-      function solution(n, k) {
-        let answer;
-        let queue = Array.from({ length: n }, (value, index) => index + 1);
-        while (queue.length) {
-          for (let i = 0; i < k - 1; i++) queue.push(queue.shift());
-          queue.shift();
-          if (queue.length === 1) answer = queue.shift();
+      function solution(need, plan) {
+        let answer = "YES";
+        let queue = need.split("");
+        for (let x of plan) {
+          if (queue.includes(x)) {
+            if (x !== queue.shift()) return "NO";
+          }
         }
+        if (queue.length > 0) return "NO";
         return answer;
       }
-      console.log(solution(8, 3));
+      console.log(solution("CBA", "BDAGE"));
     </script>
   </body>
 </html>
