@@ -5,18 +5,13 @@
   </head>
   <body>
     <script>
-      function solution(need, plan) {
-        let answer = "YES";
-        let queue = need.split("");
-        for (let x of plan) {
-          if (queue.includes(x)) {
-            if (x !== queue.shift()) return "NO";
-          }
-        }
-        if (queue.length > 0) return "NO";
+      function solution(arr) {
+        let answer = arr;
+        let tmp;
         return answer;
       }
-      console.log(solution("CBA", "BDAGE"));
+      arr = [11, 7, 5, 6, 10, 9];
+      console.log(solution(arr));
     </script>
   </body>
 </html>
