@@ -70,3 +70,31 @@ function solution(n, arr1, arr2) {
     return answer;
 }
 ```
+
+#　성격 유형 검사하기
+
+## 문제 풀이
+
+```
+function solution(survey, choices) {
+    let table = new Map();
+    Array("R", "T", "C", "F", "J", "M", "A", "N").forEach((e) =>
+        table.set(e, 0)
+    );
+    survey.forEach((e, i) => {
+        let score = choices[i] - 4;
+        if (score > 0) {
+            table.set(e[1], table.get(e[1]) + score);
+        } else if (score < 0) {
+            table.set(e[0], table.get(e[0]) + Math.abs(score));
+          }
+    });
+    let answer = "";
+    Array("RT", "CF", "JM", "AN").forEach((e) => {
+        answer += [...e].sort((a, b) => table.get(b) - table.get(a))[0];
+    });
+    return answer;
+}
+let arr = [1, 2, 8, 4, 9];
+console.log(solution(["AN", "CF", "MJ", "RT", "NA"], [5, 3, 2, 7, 5]));
+```
