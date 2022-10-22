@@ -5,28 +5,20 @@
   </head>
   <body>
     <script>
-      function solution(survey, choices) {
-        let table = new Map();
-        Array("R", "T", "C", "F", "J", "M", "A", "N").forEach((e) =>
-          table.set(e, 0)
-        );
-        survey.forEach((e, i) => {
-          let score = choices[i] - 4;
-          if (score > 0) {
-            table.set(e[1], table.get(e[1]) + score);
-          } else if (score < 0) {
-            table.set(e[0], table.get(e[0]) + Math.abs(score));
+      function solution(n) {
+        let answer;
+        function DFS(n) {
+          if (n > 7) return;
+          else {
+            console.log(n);
+            DFS(n * 2);
+            DFS(n * 2 + 1);
           }
-        });
-        let answer = "";
-        Array("RT", "CF", "JM", "AN").forEach((e) => {
-          answer += [...e].sort((a, b) => table.get(b) - table.get(a))[0];
-        });
+        }
+        DFS(n);
         return answer;
       }
-
-      let arr = [1, 2, 8, 4, 9];
-      console.log(solution(["AN", "CF", "MJ", "RT", "NA"], [5, 3, 2, 7, 5]));
+      console.log(solution(1));
     </script>
   </body>
 </html>
