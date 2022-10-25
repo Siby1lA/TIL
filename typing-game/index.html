@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <h1>타이핑 마스터!</h1>
+    </div>
+    <div class="word-display">
+        Hello
+    </div>
+    <div class="word-input-box">
+        <input type="text" class="word-input">
+    </div>
+    <div class="game-info">
+        <div>
+            남은시간 <sapn class="time">0</sapn>초
+        </div>
+        <div>
+            흭득점수 <span class="score">0</span>점
+        </div>
+    </div>
+    <div class="button loading" onclick="run()">게임을 불러오는중...</div>
+    <script src="js/main.js"></script>
+</body>
+</html>
