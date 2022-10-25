@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뷰 기초 익히기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div class="app">
+        <form v-on:submit.prevent="submit()">
+            <!-- <input type="text" :value="text" @keyup="updateText"><br> -->
+            <input type="text" v-model="text"><br>
+            {{text}}<br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script>
+        new Vue({
+            el: '.app',
+            data: {
+                year: 2021,
+                text: 'text'
+            },
+            methods: {
+                plus(){
+                    this.year++;
+                },
+                minus(){
+                    this.year--;
+                },
+                submit(){
+                    alert('서브밋');
+                    console.log('hello')
+                },
+                // updateText(event){
+                //     this.text = event.target.value;
+                // }
+            }
+        })
+    </script>
+</body>
+</html>
