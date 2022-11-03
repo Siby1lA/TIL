@@ -92,7 +92,27 @@ console.log(solution(3));
 ### 문제 풀이
 
 ```
-
+function solution(arr) {
+    let answer = "NO", flag = 0;
+    let total = arr.reduce((a, b) => a + b, 0);
+    let n = arr.length;
+    function DFS(L, sum) {
+        if (flag) return;
+        if (L === n) {
+            if (total - sum === sum) {
+              answer = "YES";
+              flag = 1;
+            }
+        } else {
+            DFS(L + 1, sum + arr[L]);
+            DFS(L + 1, sum);
+        }
+    }
+    DFS(0, 0);
+    return answer;
+}
+let arr = [1, 3, 5, 6, 7, 10];
+console.log(solution(arr));
 ```
 
 ## 바둑이 승차(DFS)
@@ -100,5 +120,46 @@ console.log(solution(3));
 ### 문제 풀이
 
 ```
+function solution(c, arr) {
+    let answer = Number.MIN_SAFE_INTEGER;
+    let n = arr.length;
+    function DFS(L, sum) {
+        if (sum > c) return;
+        if (L === n) {
+            answer = Math.max(answer, sum);
+        } else {
+            DFS(L + 1, sum + arr[L]);
+            DFS(L + 1, sum);
+        }
+    }
+    DFS(0, 0);
+    return answer;
+}
+let arr = [81, 58, 42, 33, 61];
+console.log(solution(259, arr));
+```
 
+## 최대점수 구하기(DFS)
+
+### 문제 풀이
+
+```
+function solution(m, ps, pt) {
+    let answer = Number.MIN_SAFE_INTEGER;
+    let n = ps.length;
+    function DFS(L, sum, time) {
+        if (time > m) return;
+        if (L === n) {
+            answer = Math.max(answer, sum);
+        } else {
+            DFS(L + 1, sum + ps[L], time + pt[L]);
+            DFS(L + 1, sum, time);
+        }
+    }
+    DFS(0, 0, 0);
+    return answer;
+}
+let ps = [10, 25, 15, 6, 7];
+let pt = [5, 12, 8, 3, 4];
+console.log(solution(20, ps, pt));
 ```
