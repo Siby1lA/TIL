@@ -163,3 +163,27 @@ let ps = [10, 25, 15, 6, 7];
 let pt = [5, 12, 8, 3, 4];
 console.log(solution(20, ps, pt));
 ```
+
+## 중복순열(다중 for문과 재귀의 차이점)
+
+### 문제 풀이
+
+```
+function solution(n, m) {
+    let answer = [];
+    let tmp = Array.from({ length: m }, () => 0);
+    function DFS(L) {
+        if (L === m) {
+            answer.push(tmp.slice());
+        } else {
+            for (let i = 1; i <= n; i++) {
+              tmp[L] = i;
+              DFS(L + 1);
+            }
+        }
+    }
+    DFS(0);
+    return answer;
+}
+console.log(solution(3, 2));
+```
