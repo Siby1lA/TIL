@@ -1,12 +1,9 @@
-// const fn = {
-//   add: (num1, num2) => num1 + num2,
-//   makeUser: (name, age) => ({ name, age, gender: undefined }),
-//   throwErr: () => {
-//     throw new Error("xx");
-//   },
-// };
-
 const fn = {
+  add: (num1, num2) => num1 + num2,
+  makeUser: (name, age) => ({ name, age, gender: undefined }),
+  throwErr: () => {
+    throw new Error("xx");
+  },
   getName: (callback) => {
     const name = "mike";
     setTimeout(() => {
@@ -21,6 +18,42 @@ const fn = {
         res(age);
         // rej("error");
       }, 3000);
+    });
+  },
+  connetUserDb: () => {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res({
+          name: "mike",
+          age: 30,
+          gender: "male",
+        });
+      }, 500);
+    });
+  },
+  disconnetUserDb: () => {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res();
+      }, 500);
+    });
+  },
+  connetCarDb: () => {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res({
+          brand: "bmw",
+          name: "z4",
+          color: "red",
+        });
+      }, 500);
+    });
+  },
+  disconnetCarDb: () => {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res();
+      }, 500);
     });
   },
 };

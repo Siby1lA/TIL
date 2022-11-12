@@ -97,34 +97,133 @@ const fn = require("./fn");
 
 // 비동기 callback 방식
 // done으로 기달리게함 (안쓰면 그냥 실행 끝내버림)
-test("3초 후에 받아온 이름은 mike", (done) => {
-  function callback(name) {
-    try {
-      expect(name).toBe("mike");
-      done();
-    } catch (error) {
-      done(error);
-    }
-  }
-  fn.getName(callback);
+// test("3초 후에 받아온 이름은 mike", (done) => {
+//   function callback(name) {
+//     try {
+//       expect(name).toBe("mike");
+//       done();
+//     } catch (error) {
+//       done(error);
+//     }
+//   }
+//   fn.getName(callback);
+// });
+
+// // 비동기 promise
+// test("3초 후에 받아온 나이는 30", () => {
+//   return fn.getAge().then((age) => {
+//     expect(age).toBe(30);
+//   });
+//   // resolves, rejects 테스트도 가능
+//   // return expect(fn.getAge()).resolves.toBe(30);
+//   // return expect(fn.getAge()).rejects.toMatch("error");
+// });
+
+// test("3초 후에 받아온 나이는 30", async () => {
+//   const age = await fn.getAge();
+//   expect(age).toBe(30);
+// });
+
+// // resolves, rejects 테스트도 가능
+// test("3초 후에 받아온 나이는 30", async () => {
+//   await expect(fn.getAge()).resolves.toBe(30);
+// });
+
+// 테스트 전후 작업
+
+let num = 0;
+
+// 각 테스트 전에 실행됨
+// beforeEach(() => {
+//   num = 0;
+// });
+
+// 각 테스트 직후 실행
+// afterEach(() => {
+//   num = 0;
+// });
+
+// test("0더하기 1은 1", () => {
+//   num = fn.add(num, 1);
+//   expect(num).toBe(1);
+// });
+
+// test("0더하기 2은 2", () => {
+//   num = fn.add(num, 2);
+//   expect(num).toBe(2);
+// });
+
+// test("0더하기 3은 3", () => {
+//   num = fn.add(num, 3);
+//   expect(num).toBe(3);
+// });
+
+// let user;
+// // all은 각 테스트마다 실행이 아닌 전체적인 테스트 실행 전, 후에 실행
+// beforeAll(async () => {
+//   user = await fn.connetUserDb();
+// });
+
+// afterAll(async () => {
+//   return fn.disconnetUserDb();
+// });
+
+// test("이름은 mkie", () => {
+//   expect(user.name).toBe("mike");
+// });
+
+// test("나이는 30", () => {
+//   expect(user.age).toBe(30);
+// });
+
+// // 별개의 작업 공간 describe
+// describe("Car 관련 작업", () => {
+//   let car;
+//   beforeAll(async () => {
+//     car = await fn.connetCarDb();
+//   });
+
+//   afterAll(async () => {
+//     return fn.disconnetCarDb();
+//   });
+
+//   test("이름은", () => {
+//     expect(car.name).toBe("z4");
+//   });
+
+//   test("컬러는", () => {
+//     expect(car.color).toBe("red");
+//   });
+// });
+
+// 실행 순서 알아보기
+// 밖에 있는 beforeEach는 안에 있는 beforeEach 보다 항상 먼저 실행
+beforeAll(() => console.log("밖 beforeAll")); // 1
+beforeEach(() => console.log("밖 beforeEach")); // 2 6
+afterEach(() => console.log("밖 afterEach")); // 4 10
+afterAll(() => console.log("밖 afterAll")); // 12
+
+test("0 + 1 = 1", () => {
+  expect(fn.add(0, 1)).toBe(1); // 3
 });
 
-// 비동기 promise
-test("3초 후에 받아온 나이는 30", () => {
-  return fn.getAge().then((age) => {
-    expect(age).toBe(30);
+describe("Car 관련 작업", () => {
+  beforeAll(() => console.log("안 beforeAll")); // 5
+  beforeEach(() => console.log("안 beforeEach")); // 7
+  afterEach(() => console.log("안 afterEach")); // 9
+  afterAll(() => console.log("안 afterAll")); // 11
+
+  test("0 + 1 = 1", () => {
+    expect(fn.add(0, 1)).toBe(1); // 8
   });
-  // resolves, rejects 테스트도 가능
-  // return expect(fn.getAge()).resolves.toBe(30);
-  // return expect(fn.getAge()).rejects.toMatch("error");
 });
 
-test("3초 후에 받아온 나이는 30", async () => {
-  const age = await fn.getAge();
-  expect(age).toBe(30);
-});
+//.only 는 그 테스트 코드만 실행
+//.skip 은 그 테스트 코드를 스킵
 
-// resolves, rejects 테스트도 가능
-test("3초 후에 받아온 나이는 30", async () => {
-  await expect(fn.getAge()).resolves.toBe(30);
+test.skip("0 + 1 = 1", () => {
+  expect(fn.add(0, 1)).toBe(1); // 8
+});
+test.only("0 + 1 = 1", () => {
+  expect(fn.add(0, 1)).toBe(1); // 8
 });
