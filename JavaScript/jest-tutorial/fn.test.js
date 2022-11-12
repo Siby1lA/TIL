@@ -198,32 +198,145 @@ let num = 0;
 
 // 실행 순서 알아보기
 // 밖에 있는 beforeEach는 안에 있는 beforeEach 보다 항상 먼저 실행
-beforeAll(() => console.log("밖 beforeAll")); // 1
-beforeEach(() => console.log("밖 beforeEach")); // 2 6
-afterEach(() => console.log("밖 afterEach")); // 4 10
-afterAll(() => console.log("밖 afterAll")); // 12
+// beforeAll(() => console.log("밖 beforeAll")); // 1
+// beforeEach(() => console.log("밖 beforeEach")); // 2 6
+// afterEach(() => console.log("밖 afterEach")); // 4 10
+// afterAll(() => console.log("밖 afterAll")); // 12
 
-test("0 + 1 = 1", () => {
-  expect(fn.add(0, 1)).toBe(1); // 3
+// test("0 + 1 = 1", () => {
+//   expect(fn.add(0, 1)).toBe(1); // 3
+// });
+
+// describe("Car 관련 작업", () => {
+//   beforeAll(() => console.log("안 beforeAll")); // 5
+//   beforeEach(() => console.log("안 beforeEach")); // 7
+//   afterEach(() => console.log("안 afterEach")); // 9
+//   afterAll(() => console.log("안 afterAll")); // 11
+
+//   test("0 + 1 = 1", () => {
+//     expect(fn.add(0, 1)).toBe(1); // 8
+//   });
+// });
+
+// //.only 는 그 테스트 코드만 실행
+// //.skip 은 그 테스트 코드를 스킵
+
+// test.skip("0 + 1 = 1", () => {
+//   expect(fn.add(0, 1)).toBe(1); // 8
+// });
+// test.only("0 + 1 = 1", () => {
+//   expect(fn.add(0, 1)).toBe(1); // 8
+// });
+
+// mock function
+// const mockFn = jest.fn();
+// mockFn();
+// mockFn(1);
+
+// test("함수는 2번 호출된다.", () => {
+//   console.log(mockFn.mock.calls);
+//   expect(mockFn.mock.calls.length).toBe(2);
+// });
+
+// test("2번째로 호출된 함수에 전달된 첫번째 인수는 1", () => {
+//   expect(mockFn.mock.calls[1][0]).toBe(1);
+// });
+
+// const mockFn = jest.fn();
+
+// function forEachAdd1(arr) {
+//   arr.forEach((num) => {
+//     mockFn(num + 1);
+//   });
+// }
+
+// forEachAdd1([10, 20, 30]);
+
+// test("함수 호출은 3번 됩니다", () => {
+//   expect(mockFn.mock.calls.length).toBe(3);
+// });
+// test("전달된 값은 11, 21, 31", () => {
+//   expect(mockFn.mock.calls[0][0]).toBe(11);
+//   expect(mockFn.mock.calls[1][0]).toBe(21);
+//   expect(mockFn.mock.calls[2][0]).toBe(31);
+// });
+
+// results 로 결과 보기 가능
+// const mockFn = jest.fn((num) => num + 1);
+
+// mockFn(10);
+// mockFn(20);
+// mockFn(30);
+
+// test("함수 호출은 3번 됩니다", () => {
+//   console.log(mockFn.mock.results);
+//   expect(mockFn.mock.calls.length).toBe(3);
+// });
+
+// test("10에서 1증가한 값이 반환", () => {
+//   expect(mockFn.mock.results[0].value).toBe(11);
+// });
+
+// const mockFn = jest.fn();
+
+// mockFn.mockReturnValueOnce(10).mockReturnValueOnce(20).mockReturnValue(30);
+
+// mockFn();
+// mockFn();
+// mockFn();
+
+// test("dd", () => {
+//   console.log(mockFn.mock.results);
+//   expect("dd").toBe("dd");
+// });
+
+// mockFn
+//   .mockReturnValueOnce(true)
+//   .mockReturnValueOnce(false)
+//   .mockReturnValueOnce(true)
+//   .mockReturnValueOnce(false)
+//   .mockReturnValue(true);
+
+// const result = [1, 2, 3, 4, 5].filter((num) => mockFn(num));
+
+// test("홀수는", () => {
+//   expect(result).toStrictEqual([1, 3, 5]);
+// });
+
+// 비동기 함수 흉내
+// const mockFn = jest.fn();
+// mockFn.mockResolvedValue({ name: "mike" });
+
+// test("받아온 이름은 mike", () => {
+//   mockFn().then((res) => {
+//     expect(res.name).toBe("mike");
+//   });
+// });
+
+// 실제로 사용자가 생성되었습니다. 안뜸 (목함수 테스트)
+// jest.mock("./fn");
+// fn.createUser.mockReturnValue({ name: "mike" });
+
+// test("유저 생성", () => {
+//   const user = fn.createUser("mike");
+//   expect(user.name).toBe("mike");
+// });
+
+// 호출 관련 유용한 것들
+const mockFn = jest.fn();
+mockFn(10, 20);
+mockFn();
+mockFn(30, 40);
+test("한번 이상 호출?", () => {
+  expect(mockFn).toBeCalled();
 });
-
-describe("Car 관련 작업", () => {
-  beforeAll(() => console.log("안 beforeAll")); // 5
-  beforeEach(() => console.log("안 beforeEach")); // 7
-  afterEach(() => console.log("안 afterEach")); // 9
-  afterAll(() => console.log("안 afterAll")); // 11
-
-  test("0 + 1 = 1", () => {
-    expect(fn.add(0, 1)).toBe(1); // 8
-  });
+test("정확히 세번 호출 ?", () => {
+  expect(mockFn).toBeCalledTimes(3);
 });
-
-//.only 는 그 테스트 코드만 실행
-//.skip 은 그 테스트 코드를 스킵
-
-test.skip("0 + 1 = 1", () => {
-  expect(fn.add(0, 1)).toBe(1); // 8
+test("10이랑 20을 전달받은 함수가 있는가?", () => {
+  expect(mockFn).toBeCalledWith(10, 20);
+  expect(mockFn).toBeCalledWith(30, 40);
 });
-test.only("0 + 1 = 1", () => {
-  expect(fn.add(0, 1)).toBe(1); // 8
+test("마지막 함수는 30이랑 40?", () => {
+  expect(mockFn).lastCalledWith(30, 40);
 });
