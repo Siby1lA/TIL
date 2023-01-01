@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, useColorScheme } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { Asset, useAssets } from "expo-asset";
-
+import { NavigationContainer } from "@react-navigation/native";
+import Root from "./navigation/Root";
+import { darkTheme, lightTheme } from "./styled";
+import { ThemeProvider } from "styled-components/native";
 SplashScreen.preventAutoHideAsync();
 // const loadFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
 // const loadImages = (images) =>
@@ -44,7 +47,7 @@ export default function App() {
       await SplashScreen.hideAsync();
     }
   }, [assets, loaded]);
-
+  const isDark = useColorScheme() === "dark";
   if (!assets || !loaded) {
     return (
       <View
@@ -57,5 +60,11 @@ export default function App() {
     );
   }
 
-  return <Text>로딩완료</Text>;
+  return (
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <NavigationContainer>
+        <Root />
+      </NavigationContainer>
+    </ThemeProvider>
+  );
 }
