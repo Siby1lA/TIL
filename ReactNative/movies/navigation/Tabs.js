@@ -17,6 +17,7 @@ function Tabs() {
         backgroundColor: isDark ? BACK_COLOR : "white",
       }}
       screenOptions={{
+        // unmountOnBlur: true,
         tabBarStyle: {
           backgroundColor: isDark ? BACK_COLOR : "white",
         },

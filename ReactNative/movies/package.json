@@ -25,6 +25,7 @@
     "react-native-screens": "^3.18.2",
     "react-native-swiper": "^1.6.0-rc.3",
     "react-native-web-swiper": "^2.2.4",
+    "react-query": "^3.39.2",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {

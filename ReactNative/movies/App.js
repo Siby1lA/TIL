@@ -1,13 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Text, View, Image, useColorScheme } from "react-native";
+import React, { useCallback } from "react";
+import { Text, View, useColorScheme } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
-import { Asset, useAssets } from "expo-asset";
+import { useAssets } from "expo-asset";
 import { NavigationContainer } from "@react-navigation/native";
 import Root from "./navigation/Root";
 import { darkTheme, lightTheme } from "./styled";
 import { ThemeProvider } from "styled-components/native";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 SplashScreen.preventAutoHideAsync();
 // const loadFonts = (fonts) => fonts.map((font) => Font.loadAsync(font));
 // const loadImages = (images) =>
@@ -61,10 +64,12 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <NavigationContainer>
-        <Root />
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <NavigationContainer>
+          <Root />
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
