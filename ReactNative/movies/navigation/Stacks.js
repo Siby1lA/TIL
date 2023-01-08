@@ -1,40 +1,28 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text, TouchableOpacity } from "react-native";
-import { YELLOW_COLOR } from "../colors";
-const ScreenOne = ({ navigation: { navigate } }) => (
-  <TouchableOpacity onPress={() => navigate("Two")}>
-    <Text>go to two</Text>
-  </TouchableOpacity>
-);
-const ScreenTwo = ({ navigation: { navigate } }) => (
-  <TouchableOpacity onPress={() => navigate("Three")}>
-    <Text>go to three</Text>
-  </TouchableOpacity>
-);
-const ScreenThree = ({ navigation: { setOptions } }) => (
-  <TouchableOpacity onPress={() => setOptions({ title: "Hello!" })}>
-    <Text>Change title</Text>
-  </TouchableOpacity>
-);
-const Stack = createNativeStackNavigator();
+import Detail from "../screens/Detail";
+import { useColorScheme } from "react-native";
+import { BLACK_COLOR } from "../colors";
 
-function Stacks() {
+const NativeStack = createNativeStackNavigator();
+
+const Stack = () => {
+  const isDark = useColorScheme() === "dark";
   return (
-    <Stack.Navigator
+    <NativeStack.Navigator
       screenOptions={{
-        headerTintColor: YELLOW_COLOR,
         headerBackTitleVisible: false,
+        headerStyle: {
+          backgroundColor: isDark ? BLACK_COLOR : "white",
+        },
+        headerTitleStyle: {
+          color: isDark ? "white" : BLACK_COLOR,
+        },
       }}
     >
-      <Stack.Screen name="One" component={ScreenOne} />
-      <Stack.Screen name="Two" component={ScreenTwo} />
-      <Stack.Screen
-        name="Three"
-        component={ScreenThree}
-        options={{ presentation: "modal" }}
-      />
-    </Stack.Navigator>
+      <NativeStack.Screen name="Detail" component={Detail} />
+    </NativeStack.Navigator>
   );
-}
-export default Stacks;
+};
+
+export default Stack;

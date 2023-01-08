@@ -6,7 +6,7 @@ import Tabs from "./Tabs";
 const Nav = createNativeStackNavigator();
 
 const Root = () => (
-  <Nav.Navigator screenOptions={{ headerShown: false }}>
+  <Nav.Navigator screenOptions={{ presentation: "modal", headerShown: false }}>
     <Nav.Screen name="Tabs" component={Tabs} />
     <Nav.Screen name="Stacks" component={Stacks} />
   </Nav.Navigator>
