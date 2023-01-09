@@ -7,6 +7,7 @@ import {
   useColorScheme,
 } from "react-native";
 import styled from "styled-components/native";
+import { Movie } from "../api";
 import { makeImgPath } from "../utils";
 import Poster from "./Poster";
 const View = styled.View`
@@ -51,6 +52,7 @@ interface SlideProps {
   original_title: string;
   vote_average: number;
   overview: string;
+  fullData: Movie;
 }
 const Slide: React.FC<SlideProps> = ({
   backdrop_path,
@@ -58,6 +60,7 @@ const Slide: React.FC<SlideProps> = ({
   original_title,
   vote_average,
   overview,
+  fullData,
 }) => {
   const isDark = useColorScheme() === "dark";
   const navigation = useNavigation();
@@ -66,7 +69,7 @@ const Slide: React.FC<SlideProps> = ({
     navigation.navigate("Stacks", {
       screen: "Detail",
       params: {
-        original_title,
+        ...fullData,
       },
     });
   };
