@@ -5,3 +5,4 @@ android
 ios
 __tests__
 vendor
+node_modules
