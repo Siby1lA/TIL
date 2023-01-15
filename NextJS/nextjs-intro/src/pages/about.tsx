@@ -1,10 +1,10 @@
-import NavBar from "../components/NavBar";
+import HeaderBar from "@/components/HeaderBar";
 
 export default function Potato() {
   return (
     <div>
-      <NavBar />
-      <h1>About</h1>
+      <HeaderBar title="Home" />
+      <h1 className="active">Hello2</h1>
     </div>
   );
 }
