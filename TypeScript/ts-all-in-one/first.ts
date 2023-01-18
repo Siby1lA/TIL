@@ -1,8 +1,8 @@
-function add<T>(x: T, y: T): T {
-  return x + y;
+// map 타입
+interface Array<T> {
+  map<U>(
+    callbackfn: (value: T, index: number, array: T[]) => U,
+    thisArg?: any
+  ): U[];
 }
-add<number>(1, 2);
-add(1, 2);
-add<string>("1", "2");
-add("1", "2");
-add(1, "2");
+const strings = [1, 2, 3].map((item) => item.toString());
