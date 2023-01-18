@@ -231,3 +231,203 @@ type B = {
 const aa: A | B = { a: 'hello', b: 'world' };
 const bb: A & B = { a: 'hello', b: 'world' };
 ```
+
+- interface는 같은 이름으로 여러번 선언할 수 있고끼리는 서로 합쳐짐.
+
+그래서 남의 라이브러리에서 사용되는 interface 타입들을 나중에 추가하고 싶을 때 선언해서 추가할 수 있음
+
+```
+interface A { a: string }
+interface A { b: string }
+const obj1: A = { a: 'hello', b: 'world' }
+
+type B = { a: string }
+type B = { b: string }
+const obj2: B = { a: 'hello', b: 'world' } // 불가능
+```
+
+- 객체 리터럴은 잉여 속성 검사가 있음.
+
+```
+type A = { hello: string };
+const a: A = { hello: 'world', why: 'error' }; // 불가능
+
+const b = { hello: 'world', why: 'error' };
+const c: A = b;
+
+```
+
+- void 타입은 return값을 사용하지 안 겠다는 뜻(메서드나 매개변수에서는 리턴값 사용 가능, but 조심해야 함)
+
+```
+declare function forEach<T>(arr: T[], callback: (el: T) => undefined): void;
+// declare function forEach<T>(arr: T[], callback: (el: T) => void): void;
+let target: number[] = [];
+forEach([1, 2, 3], el => target.push(el));
+
+interface A {
+    talk: () => void;
+}
+const a: A = {
+    talk() { return 3; }
+}
+```
+
+- 타입만 선언하고 싶을 때 declare(구현은 다른 파일에 있어야 함)
+
+```
+declare const a: string;
+declare function a(x: number): number;
+declare class A {}
+
+// 추후 declare module, declare global, declare namespace도 배움
+```
+
+- unknown과 any
+
+any를 쓸빠에 unknown이 차라리 낫다.
+any는 타입 검사를 포기해버린다. (타입스크립트를 쓰는 의미가 없음)
+unknown는 지금 당장 타입을 모를때 사용 추후 as를 지정하던가 함
+주로 try catch문에서 에러문의 타입을 지정할 때 사용한다. 나중에 (error as Error).mesaage 라고 지정함
+
+- 타입 가드
+
+promise 관련 리턴 타입 성공, 실패 타입 지정을 해줘야 한다.
+안해주면 PromiseSettledResult라고 넓게 추론해주기 때문에 성공, 실패 타입 지정하고 싶으면 ~ is PromiseRjectedResult, PromiseFulfilledResult를 사용해 타입 가드를 함
+
+```
+function numOrStr(a: number | string) {
+  if (typeof a === 'string') {
+    a.split(',');
+  } else {
+    a.toFixed(1);
+  }
+}
+
+function numOrNumArr(a: number | number[]) {
+  if (Array.isArray(a)) {
+    a.slice(1);
+  } else {
+    a.toFixed(1);
+  }
+}
+
+type B = { type: 'b', bbb: string };
+type C = { type: 'c', ccc: string };
+type D = { type: 'd', ddd: string };
+type A = B | C | D;
+function typeCheck(a: A) {
+  if (a.type === 'b') {
+    a.bbb;
+  } else if (a.type === 'c') {
+    a.ccc;
+  } else {
+    a.ddd;
+  }
+}
+
+interface Cat { meow: number }
+interface Dog { bow: number }
+function catOrDog(a: Cat | Dog): a is Dog {
+  if ((a as Cat).meow) { return false }
+  return true;
+}
+const cat: Cat | Dog = { meow: 3 }
+if (catOrDog(cat)) {
+    console.log(cat.meow);
+}
+if ('meow' in cat) {
+    console.log(cat.meow);
+}
+
+const isRejected = (input: PromiseSettledResult<unknown>): input is PromiseRejectedResult => input.status === 'rejected';
+const isFulfilled = <T>(input: PromiseSettledResult<T>): input is PromiseFulfilledResult<T> => input.status === 'fulfilled';
+
+const promises = await Promise.allSettled([Promise.resolve('a'), Promise.resolve('b')]);
+const errors = promises.filter(isRejected);
+```
+
+- {}와 Object 차이
+
+```
+const x: {} = "hello";
+const y: Object = "hi"; // {}와 Object는 모든 타입(null과 undefined는 제외)
+const xx: object = "hi"; // 에러
+const yy: object = { hello: "world" }; // object 지양 interface, type, calss를 사용하자
+const z: unknown = "hi";
+```
+
+- readonly
+
+```
+interface A {
+  readonly a: string;
+  b: string;
+}
+```
+
+- 값이 다 문자열이었음 좋겠다.
+
+인덱스 시그니처
+
+```
+type A = {[key: string]: string} // 어떤 키든 값에 문자열 값도 문자열
+```
+
+키도 줄일 수 있다
+
+```
+type B = "H" | "M" | "A";
+type A = {[key in B]: number}
+const aa: A = {H:123, M:1, A:2};
+```
+
+- class에 private, protected 추가됨
+
+```
+class B implements A {
+  private a: string;
+  protected b: string;
+}
+class C extends B {}
+new C().a;
+new C().b;
+```
+
+- optional
+
+```
+function abc(a: number, b?: number, c: number?) {}
+abc(1)
+abc(1, 2)
+abc(1, 2, 3)
+
+let obj: { a: string, b?: string }  = { a: 'hello', b: 'world' }
+obj = { a: 'hello' };
+```
+
+- 제네릭은 타입에 대한 함수라고 생각하면 됨. 추론을 활용하기
+
+```
+function add<T>(x: T, y: T): T { return x + y }
+add<number>(1, 2);
+add(1, 2);
+add<string>('1', '2');
+add('1', '2');
+add(1, '2');
+```
+
+extends로 제한 가능
+
+```
+function add<T extends number>(x: T, y: T): T {
+  return x + y;
+}
+```
+
+추론을 위해 언노운 쓰는 경우도 있음
+
+```
+const add = <T = unknown>(x: T, y: T) => ({x, y});
+const add = <T,>(x: T, y: T) => ({x, y});
+```
