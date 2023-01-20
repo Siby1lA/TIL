@@ -10,7 +10,7 @@ function HomeScreen() {
 			<HomeScreenIntro />
 			<Board />
 			<Workout />
-			<div className="flex justify-between">
+			<div className="flex">
 				<DumyCompo src={'../total.png'} title={'시재점검'} />
 				<DumyCompo src={'../total.png'} title={'체크리스트'} />
 			</div>

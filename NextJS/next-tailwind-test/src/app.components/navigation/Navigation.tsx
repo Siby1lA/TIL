@@ -1,6 +1,6 @@
 function Navigation() {
 	return (
-		<div className="flex justify-around items-center  text-gray-500 text-xs border-t-2 p-3 text-center">
+		<div className="flex justify-around items-center h-[80px] text-gray-500 text-xs border-t-2 p-3 text-center">
 			<div>
 				<div>아이콘</div>
 				<div>홈</div>
