@@ -1,31 +1,19 @@
 import React, { useState } from 'react';
-import useStore from 'src/app.modules/store';
 import MakeCalendar from '../components/MakeCalendar';
+import { IDumy } from '../types';
 
-interface IDumy {
-	year: number;
-	month: number;
-	schedule: any;
-}
-// 초기 캘린더 상태
+// 초기 캘린더 더미 상태
 const today = new Date();
 const dumyData = {
 	year: today.getFullYear(),
 	month: today.getMonth(),
 	schedule: {
-		'2023.1.5': [
-			['박수빈', 'gray'],
-			['정예원', 'tomato'],
-			['원지윤', 'green'],
-		],
-		'2023.1.7': [
-			['박수빈', 'gray'],
-			['최영진', 'yellow'],
-			['김하영', 'aqua'],
-		],
+		'2023.1.5': ['박수빈', '정예원', '원지윤'],
+		'2023.1.27': ['박수빈', '최영진', '김하영'],
 	},
 };
-const DAY_WEEK = ['일', '월', '화', '수', '목', '금', '토'];
+const DAY_WEEK: string[] = ['일', '월', '화', '수', '목', '금', '토'];
+
 function CalendarScreen() {
 	const [calendar, setCalendar] = useState<IDumy>(dumyData);
 	// 날짜 관련
@@ -75,20 +63,19 @@ function CalendarScreen() {
 			}));
 		}
 	};
-
 	return (
-		<div className="flex flex-col  items-center">
-			<div className="flex">
-				<button className="mr-[50px] font-[30px]" onClick={onDecreases}>
+		<div className="flex flex-col  items-center p-8">
+			<div className="flex w-[100%] mb-5">
+				<button className="mr-[30px] font-[30px]" onClick={onDecreases}>
 					&lt;
 				</button>
-				<p className="font-[30px]">{yearMonth}</p>
-				<button className="ml-[50px] font-[30px]" onClick={onIncreases}>
+				<p className="text-[20px] font-bold ">{yearMonth}</p>
+				<button className="ml-[30px] font-[30px]" onClick={onIncreases}>
 					&gt;
 				</button>
 			</div>
-			<table className="w-[80%] table-fixed">
-				<thead>
+			<table className="w-[100%] table-fixed">
+				<thead className="text-center">
 					<tr>
 						{DAY_WEEK.map((day, index) => (
 							<td key={index}>{day}</td>
