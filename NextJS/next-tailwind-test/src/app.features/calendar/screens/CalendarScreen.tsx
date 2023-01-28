@@ -30,6 +30,7 @@ function CalendarScreen() {
 	// 일정
 	const todo = calendar.schedule;
 
+	const { modalOpen } = useStore();
 	// Month 증가
 	const onIncreases = () => {
 		if (calendar.month < 11) {
@@ -67,6 +68,9 @@ function CalendarScreen() {
 			}));
 		}
 	};
+	const modalOpenFun = (index: any, todo: any) => {
+		modalOpen(index, todo[index]);
+	};
 	return (
 		<div className="flex flex-col  items-center p-8">
 			<div className="flex w-[100%] mb-5">
@@ -93,6 +97,7 @@ function CalendarScreen() {
 						firstDay,
 						lastDate,
 						todo,
+						modalOpenFun,
 					})}
 				</tbody>
 			</table>

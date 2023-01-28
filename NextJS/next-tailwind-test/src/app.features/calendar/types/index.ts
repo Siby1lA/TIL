@@ -10,4 +10,5 @@ export interface IMakeCal {
 	firstDay: number;
 	lastDate: number;
 	todo: { [x: string]: string[] };
+	modalOpenFun: any;
 }

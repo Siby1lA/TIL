@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Schedule(index: string, todo: { [x: string]: string[] }) {
+function Schedule(index: string, todo: { [x: string]: string[] }, modalOpenFun: any) {
 	const result: JSX.Element[] | null = [];
 	if (todo[index] !== undefined) {
 		todo[index].map((item) => {
@@ -10,7 +10,11 @@ function Schedule(index: string, todo: { [x: string]: string[] }) {
 				</div>
 			);
 		});
-		return <div className="cursor-pointer">{result}</div>;
+		return (
+			<div onClick={() => modalOpenFun(index, todo)} className="cursor-pointer">
+				{result}
+			</div>
+		);
 	}
 	return null;
 }

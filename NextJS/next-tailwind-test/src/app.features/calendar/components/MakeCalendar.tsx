@@ -3,7 +3,7 @@ import { transIdx } from 'src/app.modules/util/calendar';
 import { IMakeCal } from '../types';
 import Schedule from './Schedule';
 
-function MakeCalendar({ year, month, firstDay, lastDate, todo }: IMakeCal) {
+function MakeCalendar({ year, month, firstDay, lastDate, todo, modalOpenFun }: IMakeCal) {
 	const result = [];
 	const makeDay = (week: number) => {
 		const result = [];
@@ -19,8 +19,7 @@ function MakeCalendar({ year, month, firstDay, lastDate, todo }: IMakeCal) {
 					result.push(
 						<td className="text-gray-400 align-text-top" key={idx}>
 							{now}
-
-							<div>{Schedule(idx, todo)}</div>
+							<div>{Schedule(idx, todo, modalOpenFun)}</div>
 						</td>
 					);
 				}
@@ -32,7 +31,7 @@ function MakeCalendar({ year, month, firstDay, lastDate, todo }: IMakeCal) {
 					result.push(
 						<td className="h-[100px] align-text-top" key={idx}>
 							{now}
-							<div>{Schedule(idx, todo)}</div>
+							<div>{Schedule(idx, todo, modalOpenFun)}</div>
 						</td>
 					);
 				}
@@ -48,7 +47,7 @@ function MakeCalendar({ year, month, firstDay, lastDate, todo }: IMakeCal) {
 					result.push(
 						<td className="h-[100px] align-text-top" key={idx}>
 							{now}
-							<div>{Schedule(idx, todo)}</div>
+							<div>{Schedule(idx, todo, modalOpenFun)}</div>
 						</td>
 					);
 				}
@@ -59,7 +58,7 @@ function MakeCalendar({ year, month, firstDay, lastDate, todo }: IMakeCal) {
 					result.push(
 						<td className="text-gray-400 align-text-top" key={idx}>
 							{now}
-							<div>{Schedule(idx, todo)}</div>
+							<div>{Schedule(idx, todo, modalOpenFun)}</div>
 						</td>
 					);
 				}
