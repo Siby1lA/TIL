@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import Header from 'src/app.components/header/Header';
 import Navigation from 'src/app.components/navigation/Navigation';
 import CalendarScreen from 'src/app.features/calendar/screens/CalendarScreen';
 

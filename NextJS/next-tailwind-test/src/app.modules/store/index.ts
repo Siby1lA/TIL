@@ -1,16 +1,18 @@
+import { use } from 'react';
 import create from 'zustand';
 
 interface IStore {
-	isDark: boolean;
-	handleIsDark: () => void;
+	isOpen: boolean;
+	date?: string;
+	user?: string[];
+	modalOpen: (todo: string, user: string[]) => void;
+	modalClose: () => void;
 }
 
 const useStore = create<IStore>((set) => ({
-	isDark: false,
-	handleIsDark: () => set((state) => ({ isDark: !state.isDark })),
+	isOpen: false,
+	modalOpen: (date, user) => set(() => ({ isOpen: true, date, user })),
+	modalClose: () => set(() => ({ isOpen: false })),
 }));
 
 export default useStore;
-
-// 사용 방법
-// `const { isDark, handleIsDark } = useStore();` 처럼 구조분해할당 구조로 가져가 사용하면 된다.

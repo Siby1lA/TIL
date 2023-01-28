@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import useStore from 'src/app.modules/store';
 import MakeCalendar from '../components/MakeCalendar';
+import Modal from '../components/Modal';
 import { IDumy } from '../types';
 
 // 초기 캘린더 더미 상태
@@ -10,12 +12,14 @@ const dumyData = {
 	schedule: {
 		'2023.1.5': ['박수빈', '정예원', '원지윤'],
 		'2023.1.27': ['박수빈', '최영진', '김하영'],
+		'2023.12.17': ['이성호'],
 	},
 };
 const DAY_WEEK: string[] = ['일', '월', '화', '수', '목', '금', '토'];
 
 function CalendarScreen() {
 	const [calendar, setCalendar] = useState<IDumy>(dumyData);
+	const { isOpen } = useStore();
 	// 날짜 관련
 	const year = calendar.year;
 	const month = calendar.month;
@@ -92,6 +96,7 @@ function CalendarScreen() {
 					})}
 				</tbody>
 			</table>
+			{isOpen && <Modal />}
 		</div>
 	);
 }
