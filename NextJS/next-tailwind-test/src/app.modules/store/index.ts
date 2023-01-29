@@ -1,11 +1,11 @@
-import { use } from 'react';
+import { IUserInfo } from 'src/app.features/calendar/types';
 import create from 'zustand';
 
 interface IStore {
 	isOpen: boolean;
 	date?: string;
-	user?: string[];
-	modalOpen: (todo: string, user: string[]) => void;
+	user?: IUserInfo;
+	modalOpen: (todo: string, user: IUserInfo) => void;
 	modalClose: () => void;
 }
 
