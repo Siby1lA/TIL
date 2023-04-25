@@ -1,16 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import movies from "../screens/Movies";
-import Tv from "../screens/Tv";
-import Search from "../screens/Search";
-import { useColorScheme } from "react-native";
-import { BLACK_COLOR, DARK_GRAY, LIGHT_GRAY, YELLOW_COLOR } from "../colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
-  const isDark = useColorScheme() === "dark";
   return (
     <Tab.Navigator
       sceneContainerStyle={{

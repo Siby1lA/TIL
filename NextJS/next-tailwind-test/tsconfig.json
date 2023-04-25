@@ -16,6 +16,6 @@
     "incremental": true,
     "baseUrl": ".",
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/app.features/calendar/components/Schedule.tsx", "src/app.features/calendar/components/MakeCalendar.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/app.features/calendar/components/Schedule.tsx", "src/app.features/calendar/components/MakeCalendar.tsx", "src/app.features/calendar/screens/CalendarScreens.js"],
   "exclude": ["node_modules"]
 }

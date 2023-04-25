@@ -1,6 +1,7 @@
 /* 리덕스에서 관리 할 상태 정의 */
-
-import { init } from "../state/init";
+const init = {
+  counter: 0,
+};
 
 export default function (state = init, action) {
   switch (action.type) {

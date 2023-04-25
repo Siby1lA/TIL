@@ -1,47 +1,42 @@
 import React from 'react';
-import { getDayOfWeek } from 'src/app.modules/util/calendar';
-import { IUserInfo } from '../types';
+import { getScheduleMatch } from 'src/app.modules/util/calendar';
+import { ISchedule, IUserInfo } from '../types';
 
-function Schedule(
-	idx: string,
-	todo: { [x: string]: string },
-	onModalOpen: {
-		(arg0: string, arg1: IUserInfo): void;
-	}
-) {
-	let userInfo: IUserInfo = {
+function Schedule(idx: string, schedule: ISchedule, toDay: string, now: number) {
+	const userInfo: IUserInfo = {
 		name: [],
-		time: [],
 	};
 
-	for (let key in todo) {
-		const data = Object.keys(todo[key]);
-		for (let i = 0; i < data.length; i++) {
-			const filter = data[i] === getDayOfWeek(idx);
-			if (filter) {
-				userInfo.time.push(todo[key][data[i]]);
-				userInfo.name.push(key);
-			}
-		}
-	}
+	// 최적화 필요
+	userInfo.name = getScheduleMatch(schedule, idx);
+
 	if (userInfo.name.length > 0) {
 		return (
-			<div
-				onClick={() => {
-					onModalOpen(idx, userInfo);
-					console.log(idx);
-				}}
-				className="cursor-pointer"
-			>
-				{userInfo.name.map((item: string | undefined, index: React.Key | null | undefined) => (
+			<>
+				{userInfo.name.map((_item, index: number) => (
 					<div key={index}>
-						<li className="my-1 p-[0.5px] text-[12px] rounded-md text-center bg-[#808e9b] text-white">{item}</li>
+						{/* 근무일이 당일 일시 */}
+						{idx === toDay ? (
+							<span className="text-white flex justify-center items-center w-[30px] h-[30px] bg-black rounded">
+								{now}
+							</span>
+						) : (
+							<span className="flex justify-center items-center w-[30px] h-[30px] bg-gray-200 rounded">{now}</span>
+						)}
 					</div>
 				))}
-			</div>
+			</>
 		);
 	}
-	return null;
+	return (
+		<div key={now}>
+			{idx === toDay ? (
+				<span className="text-white flex justify-center items-center w-[30px] h-[30px] bg-black rounded">{now}</span>
+			) : (
+				<span className="flex justify-center items-center w-[30px] h-[30px]rounded">{now}</span>
+			)}
+		</div>
+	);
 }
 
 export default Schedule;

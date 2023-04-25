@@ -1,5 +1,6 @@
-export const setIncrease = () => ({
+export const setIncrease = (data) => ({
   type: "INCREASE",
+  state: data,
 });
 
 export const setDecrease = () => ({
