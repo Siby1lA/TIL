@@ -483,6 +483,46 @@ const trans = async (reibun) => {
   return result;
 };
 
+// fs.readFile("src/data/TangoData.json", async (err, data) => {
+//   // 파일 읽기
+//   if (err) throw err;
+//   const tango = JSON.parse(data);
+//   const updatedTango = {};
+
+//   for (const category of CATEGORIES) {
+//     const { title, chapter } = category;
+//     updatedTango[title] = {};
+
+//     if (tango.hasOwnProperty(title)) {
+//       for (const chap of chapter) {
+//         const { id } = chap;
+//         updatedTango[title][id] = [];
+
+//         if (tango[title].hasOwnProperty(id)) {
+//           const origData = tango[title][id];
+//           const modifiedData = await Promise.all(
+//             origData.map(async (item) => {
+//               const { reibunFurigana, ...rest } = item;
+//               return {
+//                 ...rest,
+//                 reibunHtml: await trans(item.reibun),
+//               };
+//             })
+//           );
+//           console.log(modifiedData);
+//           updatedTango[title][id] = modifiedData;
+//         }
+//       }
+//     }
+//   }
+//   const updatedData = JSON.stringify(updatedTango);
+//   // 파일 저장
+//   fs.writeFile("src/data/newTangoData.json", updatedData, (err) => {
+//     if (err) throw err;
+//     console.log("데이터가 성공적으로 수정");
+//   });
+// });
+
 fs.readFile("src/data/TangoData.json", async (err, data) => {
   // 파일 읽기
   if (err) throw err;
@@ -502,23 +542,23 @@ fs.readFile("src/data/TangoData.json", async (err, data) => {
           const origData = tango[title][id];
           const modifiedData = await Promise.all(
             origData.map(async (item) => {
-              const { reibunFurigana, ...rest } = item;
               return {
-                ...rest,
-                reibunHtml: await trans(item.reibun),
+                ...item,
+                imiWait: "",
+                reibunWait: "",
               };
             })
           );
-          console.log(modifiedData);
           updatedTango[title][id] = modifiedData;
         }
       }
     }
   }
   const updatedData = JSON.stringify(updatedTango);
+  // 파일 저장
   fs.writeFile("src/data/newTangoData.json", updatedData, (err) => {
     if (err) throw err;
-    console.log("데이터가 성공적으로 수정되어 저장되었습니다.");
+    console.log("데이터가 성공적으로 수정");
   });
 });
 
