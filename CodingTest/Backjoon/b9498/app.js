@@ -1,16 +1,18 @@
 const fs = require("fs");
-const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
-let input = fs.readFileSync(filePath).toString().toString().trim();
+const filePath = process.platform === "linux" ? "/dev/stdin" : "/input.txt";
+let input = fs
+  .readFileSync(__dirname + filePath)
+  .toString()
+  .trim();
 solution(input);
 function solution(A) {
-  // Write your code
-  if (A <= 100 && A >= 90) {
+  if (90 <= A && 100 >= A) {
     console.log("A");
-  } else if (A <= 89 && A >= 80) {
+  } else if (80 <= A && 89 >= A) {
     console.log("B");
-  } else if (A <= 79 && A >= 70) {
+  } else if (70 <= A && 79 >= A) {
     console.log("C");
-  } else if (A <= 69 && A >= 60) {
+  } else if (60 <= A && 69 >= A) {
     console.log("D");
   } else {
     console.log("F");
