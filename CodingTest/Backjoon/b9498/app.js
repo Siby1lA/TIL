@@ -4,18 +4,17 @@ let input = fs
   .readFileSync(__dirname + filePath)
   .toString()
   .trim();
-const [h, m] = input.split(" ").map(Number);
-solution(h, m);
-
-function solution(h, m) {
-  if (m < 45) {
-    h -= 1;
-    m += 15;
-    if (h < 0) {
-      h = 23;
-    }
+solution(input);
+function solution(A) {
+  if (90 <= A && 100 >= A) {
+    console.log("A");
+  } else if (80 <= A && 89 >= A) {
+    console.log("B");
+  } else if (70 <= A && 79 >= A) {
+    console.log("C");
+  } else if (60 <= A && 69 >= A) {
+    console.log("D");
   } else {
-    m -= 45;
+    console.log("F");
   }
-  console.log(h, m);
 }
