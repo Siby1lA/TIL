@@ -13,7 +13,7 @@ solution(VAL);
 function solution(val) {
   console.log(Math.min(...val), Math.max(...val));
 }
-function solution(n, val) {
+// function solution(n, val) {
 //   let max = Number.MIN_SAFE_INTEGER;
 //   let min = Number.MAX_SAFE_INTEGER;
 //   for (let i = 0; i < n; i += 1) {
@@ -22,4 +22,4 @@ function solution(n, val) {
 //   }
 //   console.log(min, max);
 // }
-// 
+//
